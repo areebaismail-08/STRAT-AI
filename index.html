@@ -10,18 +10,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --white: #ffffff;
-        --alt: #f4f7fa;
-        --navy: #1a2b4b;
-        --indigo: #4f46e5;
-        --gold: #ffd700;
-        --text: #1f2937;
-        --text-muted: #6b7280;
+        --bg: #050911;
+        --bg2: #080d17;
+        --bg3: #0d1525;
+        --card: #0a1020;
+        --navy: #1A2B4B;
+        --indigo: #4F46E5;
+        --cyan: #00D1FF;
+        --gold: #FFD700;
+        --text: #E8EDF5;
+        --muted: #6B7A99;
+        --border: rgba(255,255,255,0.06);
         --radius: 12px;
-        --shadow: 0 4px 24px rgba(26, 43, 75, 0.08);
       }
       *, *::before, *::after { box-sizing: border-box; }
-      body { margin: 0; font-family: "Inter", system-ui, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+      body { margin: 0; font-family: "Inter", system-ui, sans-serif; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
       a { color: inherit; text-decoration: none; }
       .skip { position: absolute; left: -9999px; top: 0; padding: 0.75rem 1rem; background: var(--indigo); color: #fff; z-index: 100; }
       .skip:focus { left: 1rem; top: 1rem; }
@@ -33,33 +36,31 @@
       .nav-cta { padding: 0.5rem 1.15rem; font-size: 0.875rem; font-weight: 500; color: #fff; background: var(--indigo); border-radius: 8px; transition: background 0.15s, box-shadow 0.15s; }
       .nav-cta:hover { background: #4338ca; box-shadow: 0 4px 16px rgba(79,70,229,0.35); }
 
-      /* FIX 1: Hero background - dark #050911 with gradients and dot grid */
       .hero {
         position: relative;
         text-align: center;
         padding: clamp(4rem, 12vw, 7rem) clamp(1.25rem, 4vw, 2rem) clamp(5rem, 14vw, 8rem);
         background:
-          radial-gradient(ellipse 70% 60% at 50% 40%, rgba(79,70,229,0.12) 0%, transparent 65%),
-          radial-gradient(ellipse 50% 45% at 85% 90%, rgba(0,209,255,0.06) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 60% at 50% 30%, rgba(79,70,229,0.12) 0%, transparent 65%),
+          radial-gradient(ellipse 50% 40% at 80% 70%, rgba(0,209,255,0.05) 0%, transparent 60%),
           #050911;
         background-image:
-          radial-gradient(ellipse 70% 60% at 50% 40%, rgba(79,70,229,0.12) 0%, transparent 65%),
-          radial-gradient(ellipse 50% 45% at 85% 90%, rgba(0,209,255,0.06) 0%, transparent 60%),
-          radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+          radial-gradient(ellipse 80% 60% at 50% 30%, rgba(79,70,229,0.12) 0%, transparent 65%),
+          radial-gradient(ellipse 50% 40% at 80% 70%, rgba(0,209,255,0.05) 0%, transparent 60%),
+          radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
         background-size: 100% 100%, 100% 100%, 40px 40px;
         overflow: hidden;
       }
 
       .hero-inner { position: relative; max-width: 52rem; margin: 0 auto; }
 
-      /* FIX 2: Gemini badge */
       .gemini-badge {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
         margin-bottom: 1.5rem;
         padding: 0.35rem 0.9rem;
-        background: rgba(10, 16, 32, 0.8);
+        background: rgba(13, 21, 37, 0.8);
         border: 1px solid rgba(79,70,229,0.3);
         border-radius: 999px;
         font-family: "JetBrains Mono", monospace;
@@ -84,19 +85,18 @@
         50% { opacity: 0.5; transform: scale(0.7); }
       }
 
-      .hero h1 { margin: 0 0 1.25rem; font-size: clamp(1.85rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.03em; color: #f0f4ff; }
-      .hero .sub { margin: 0 auto 2.25rem; max-width: 38rem; font-size: 1.125rem; line-height: 1.65; color: rgba(200,210,240,0.75); }
+      .hero h1 { margin: 0 0 1.25rem; font-size: clamp(1.85rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.03em; color: var(--text); }
+      .hero .sub { margin: 0 auto 2.25rem; max-width: 38rem; font-size: 1.125rem; line-height: 1.65; color: var(--muted); }
       .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; }
       .btn-primary { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: #fff; background: var(--indigo); border-radius: var(--radius); transition: background 0.15s, box-shadow 0.15s; }
       .btn-primary:hover { background: #4338ca; box-shadow: 0 6px 20px rgba(79,70,229,0.3); }
-      .btn-outline { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: #a5b4fc; background: transparent; border: 2px solid rgba(79,70,229,0.5); border-radius: var(--radius); transition: background 0.15s, border-color 0.15s; }
+      .btn-outline { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: var(--indigo); background: transparent; border: 2px solid var(--indigo); border-radius: var(--radius); transition: background 0.15s, border-color 0.15s; }
       .btn-outline:hover { background: rgba(79,70,229,0.1); border-color: rgba(79,70,229,0.8); }
 
-      /* FIX 4: Terminal output card */
       .terminal-card {
         max-width: 680px;
         margin: 0 auto;
-        background: #0a1020;
+        background: var(--card);
         border: 1px solid rgba(79,70,229,0.35);
         border-radius: 10px;
         overflow: hidden;
@@ -108,7 +108,7 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 1rem;
-        background: #0d1525;
+        background: var(--bg3);
         border-bottom: 1px solid rgba(79,70,229,0.2);
       }
       .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -138,17 +138,12 @@
         color: rgba(165,180,252,0.9);
         letter-spacing: 0.04em;
       }
-      .terminal-label.research { color: #60a5fa; }
-      .terminal-label.strategy { color: #a78bfa; }
-      .terminal-label.content { color: #34d399; }
-      .terminal-label.analytics { color: #fbbf24; }
-      .terminal-text { color: rgba(210,220,240,0.75); }
+      .terminal-text { color: var(--muted); }
       .terminal-text .num { color: #4ade80; font-weight: 700; }
 
-      /* FIX 5: Pipeline section */
-      .pipeline { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: #050911; }
-      .pipeline h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: #f0f4ff; }
-      .pipeline .lead { text-align: center; margin: 0 auto 2.75rem; max-width: 32rem; font-size: 0.9375rem; color: rgba(200,210,240,0.6); }
+      .pipeline { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--bg2); }
+      .pipeline h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: var(--text); }
+      .pipeline .lead { text-align: center; margin: 0 auto 2.75rem; max-width: 32rem; font-size: 0.9375rem; color: var(--muted); }
       .pipeline-row {
         display: flex;
         flex-wrap: wrap;
@@ -162,7 +157,7 @@
         flex: 1 1 160px;
         max-width: 210px;
         padding: 1.5rem 1.25rem;
-        background: #0a1020;
+        background: var(--card);
         border: 1px solid rgba(79,70,229,0.25);
         border-radius: 10px;
         text-align: center;
@@ -176,8 +171,8 @@
         margin-bottom: 0.5rem;
       }
       .pipeline-icon { font-size: 1.75rem; margin-bottom: 0.6rem; }
-      .pipeline-box h3 { margin: 0 0 0.35rem; font-size: 0.9375rem; font-weight: 600; color: #e2e8f0; }
-      .pipeline-box p { margin: 0; font-size: 0.8rem; color: rgba(200,210,240,0.55); line-height: 1.4; }
+      .pipeline-box h3 { margin: 0 0 0.35rem; font-size: 0.9375rem; font-weight: 600; color: var(--text); }
+      .pipeline-box p { margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
       .pipeline-arrow {
         font-family: "JetBrains Mono", monospace;
         font-size: 1.25rem;
@@ -191,12 +186,11 @@
         .pipeline-arrow { transform: rotate(90deg); }
       }
 
-      /* FIX 6: Without/With comparison */
-      .compare { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--alt); }
-      .compare h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: var(--navy); }
-      .compare .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--text-muted); }
+      .compare { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--bg2); }
+      .compare h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: var(--text); }
+      .compare .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--muted); }
       .compare-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
-      .compare-col { flex: 1 1 300px; padding: 1.75rem; border-radius: var(--radius); background: var(--white); }
+      .compare-col { flex: 1 1 300px; padding: 1.75rem; border-radius: var(--radius); background: var(--card); }
       .compare-col.without { border: 2px solid rgba(239,68,68,0.4); }
       .compare-col.with { border: 2px solid rgba(79,70,229,0.45); }
       .compare-col h3 { margin: 0 0 1.25rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-family: "JetBrains Mono", monospace; }
@@ -208,19 +202,17 @@
       .compare-col.without .compare-list li::before { content: "✗"; color: #ef4444; font-weight: 700; }
       .compare-col.with .compare-list li::before { content: "✓"; color: var(--indigo); font-weight: 700; }
 
-      /* AGENTS */
-      .agents { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--white); }
-      .agents h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; }
-      .agents .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--text-muted); }
+      .agents { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--bg2); }
+      .agents h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: var(--text); }
+      .agents .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--muted); }
       .agent-grid { display: flex; flex-wrap: wrap; gap: 1.25rem; max-width: 1100px; margin: 0 auto; justify-content: center; }
-      .agent-card { flex: 1 1 220px; max-width: 260px; padding: 1.75rem 1.5rem; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid rgba(26,43,75,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-      .agent-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,43,75,0.12); }
+      .agent-card { flex: 1 1 220px; max-width: 260px; padding: 1.75rem 1.5rem; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s; }
+      .agent-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(79,70,229,0.15); }
       .agent-icon { font-size: 2rem; margin-bottom: 1rem; }
-      .agent-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 600; color: var(--navy); }
-      .agent-card p { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--text-muted); }
+      .agent-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 600; color: var(--text); }
+      .agent-card p { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--muted); }
       .agent-card .link { display: inline-block; margin-top: 1rem; font-size: 0.8125rem; font-weight: 500; color: var(--indigo); }
 
-      /* FOOTER */
       .footer { background: var(--navy); padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem); text-align: center; }
       .footer p { margin: 0 0 1rem; font-size: 0.875rem; color: rgba(255,255,255,0.65); }
       .footer-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; justify-content: center; }
@@ -272,19 +264,19 @@
             </div>
             <div class="terminal-body">
               <div class="terminal-line">
-                <span class="terminal-label research">RESEARCH</span>
+                <span class="terminal-label">RESEARCH</span>
                 <span class="terminal-text">Analyzed <span class="num">3</span> competitors &middot; Found <span class="num">12</span> content gaps &middot; Market opportunity: <span class="num">+23%</span></span>
               </div>
               <div class="terminal-line">
-                <span class="terminal-label strategy">STRATEGY</span>
+                <span class="terminal-label">STRATEGY</span>
                 <span class="terminal-text">LinkedIn + Email &middot; <span class="num">8</span>-week sprint &middot; <span class="num">40%</span> awareness / <span class="num">60%</span> conversion</span>
               </div>
               <div class="terminal-line">
-                <span class="terminal-label content">CONTENT</span>
+                <span class="terminal-label">CONTENT</span>
                 <span class="terminal-text"><span class="num">6</span> ad variants &middot; <span class="num">3</span> email sequences &middot; <span class="num">4</span> LinkedIn posts generated</span>
               </div>
               <div class="terminal-line">
-                <span class="terminal-label analytics">ANALYTICS</span>
+                <span class="terminal-label">ANALYTICS</span>
                 <span class="terminal-text">Projected CTR: <span class="num">4.2%</span> &middot; Est. leads/month: <span class="num">340</span> &middot; ROI forecast: <span class="num">+280%</span></span>
               </div>
             </div>

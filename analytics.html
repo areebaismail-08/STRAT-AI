@@ -9,26 +9,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
     <style>
-      :root{--white:#fff;--alt:#f4f7fa;--navy:#1a2b4b;--indigo:#4f46e5;--gold:#ffd700;--text:#1f2937;--muted:#6b7280;--radius:12px;--shadow:0 4px 24px rgba(26,43,75,.08)}
-      *,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+      :root {
+        --bg: #050911;
+        --bg2: #080d17;
+        --bg3: #0d1525;
+        --card: #0a1020;
+        --navy: #1A2B4B;
+        --indigo: #4F46E5;
+        --cyan: #00D1FF;
+        --gold: #FFD700;
+        --text: #E8EDF5;
+        --muted: #6B7A99;
+        --border: rgba(255,255,255,0.06);
+        --radius: 12px;
+      }
+      *,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
       .nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,2.5rem);height:4rem;background:var(--navy);position:sticky;top:0;z-index:50}
       .logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.15rem;color:#fff}
       .nav-links{display:flex;gap:.25rem;flex-wrap:wrap}.nav-links a{padding:.5rem .85rem;font-size:.875rem;color:rgba(255,255,255,.75);border-radius:8px}.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-links a[aria-current=page]{color:#fff;background:rgba(79,70,229,.35)}
       .nav-cta{padding:.5rem 1.15rem;font-size:.875rem;font-weight:500;color:#fff;background:var(--indigo);border-radius:8px}
-      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--white);position:relative}.page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
-      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300}.page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);line-height:1.6}
-      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}.section--alt{background:var(--alt)}.wrap{max-width:960px;margin:0 auto}
-      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--navy)}.section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
-      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--navy)}input{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid #d1d5db;border-radius:8px}
+      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--bg);position:relative}.page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
+      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300;color:var(--text)}.page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);line-height:1.6}
+      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}.section--alt{background:var(--bg2)}.wrap{max-width:960px;margin:0 auto}
+      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--text)}.section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
+      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--text)}input{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text)}
       .metrics{display:flex;flex-wrap:wrap;gap:1rem}.metrics>div{flex:1 1 200px}
       .btn-primary{display:inline-block;margin-top:.5rem;padding:.85rem 1.75rem;font-size:.9375rem;font-weight:500;color:#fff;background:var(--indigo);border:none;border-radius:var(--radius);cursor:pointer}
       .kpi-row{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
-      .kpi{flex:1 1 140px;padding:1.25rem;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);text-align:center}
+      .kpi{flex:1 1 140px;padding:1.25rem;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);text-align:center}
       .kpi .val{display:block;font-size:1.5rem;font-weight:600;color:var(--indigo)}.kpi .lbl{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-      .rec-card{padding:1.25rem 1.5rem;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:1rem;border-left:4px solid var(--gold)}
-      .rec-card h3{margin:0 0 .5rem;font-size:1rem;font-weight:600}.rec-card p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.55}
-      .forecast{padding:1.5rem;background:var(--navy);color:#fff;border-radius:var(--radius)}
-      .forecast h3{margin:0 0 1rem;font-size:1rem;font-weight:600;color:var(--gold)}.forecast p{margin:0;font-size:.9rem;line-height:1.65;color:rgba(255,255,255,.8)}
+      .rec-card{padding:1.25rem 1.5rem;background:var(--card);border-radius:var(--radius);margin-bottom:1rem;border-left:4px solid var(--gold);border:1px solid var(--border);border-left:4px solid var(--gold)}
+      .rec-card h3{margin:0 0 .5rem;font-size:1rem;font-weight:600;color:var(--text)}.rec-card p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.55}
+      .forecast{padding:1.5rem;background:var(--bg3);color:var(--text);border-radius:var(--radius);border:1px solid var(--border)}
+      .forecast h3{margin:0 0 1rem;font-size:1rem;font-weight:600;color:var(--gold)}.forecast p{margin:0;font-size:.9rem;line-height:1.65;color:var(--muted)}
       .footer{background:var(--navy);padding:2.5rem clamp(1.25rem,4vw,2.5rem);text-align:center}.footer p{margin:0 0 1rem;font-size:.875rem;color:rgba(255,255,255,.65)}.footer-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center}.footer-nav a{font-size:.875rem;color:rgba(255,255,255,.8)}.footer-nav a:hover{color:var(--gold)}
     </style>
   </head>
@@ -64,11 +77,11 @@
         <h2>KPI analysis</h2>
         <p class="intro">Snapshot based on your inputs vs. category benchmarks.</p>
         <div class="kpi-row">
-          <div class="kpi"><span class="val">2.4%</span><span class="lbl">Conv. rate</span></motion>
-          <div class="kpi"><span class="val">$42</span><span class="lbl">CAC</span></motion>
-          <div class="kpi"><span class="val">$168</span><span class="lbl">CPL</span></motion>
-          <div class="kpi"><span class="val">3.2x</span><span class="lbl">ROAS</span></motion>
-        </motion>
+          <div class="kpi"><span class="val">2.4%</span><span class="lbl">Conv. rate</span></div>
+          <div class="kpi"><span class="val">$42</span><span class="lbl">CAC</span></div>
+          <div class="kpi"><span class="val">$168</span><span class="lbl">CPL</span></div>
+          <div class="kpi"><span class="val">3.2x</span><span class="lbl">ROAS</span></div>
+        </div>
         <article class="rec-card">
           <h3>Recommendation: Fix landing page friction</h3>
           <p>Exit surveys suggest 34% drop-off on mobile form fields. A/B test single-field lead capture — projected +0.6% conversion lift.</p>
@@ -84,8 +97,8 @@
         <div class="forecast">
           <h3>90-day forecast</h3>
           <p>With recommended optimizations: traffic +24–31%, conversions +35–42%, CAC down 12–18%. Confidence interval 78% based on comparable B2B SaaS cohorts. Run StratAI content + strategy agents to accelerate top-of-funnel.</p>
-        </motion>
-      </motion>
+        </div>
+      </div>
     </section>
     <footer class="footer">
       <p>Powered by Google Gemini</p>
