@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StratAI Research — market positioning and competitor intelligence." />
+    <title>Research — StratAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root { --white:#fff; --alt:#f4f7fa; --navy:#1a2b4b; --indigo:#4f46e5; --gold:#ffd700; --text:#1f2937; --muted:#6b7280; --radius:12px; --shadow:0 4px 24px rgba(26,43,75,0.08); }
+      *,*::before,*::after{box-sizing:border-box}
+      body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased}
+      a{color:inherit;text-decoration:none}
+      .nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,2.5rem);height:4rem;background:var(--navy);position:sticky;top:0;z-index:50}
+      .logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.15rem;color:#fff}
+      .nav-links{display:flex;gap:.25rem;flex-wrap:wrap}
+      .nav-links a{padding:.5rem .85rem;font-size:.875rem;color:rgba(255,255,255,.75);border-radius:8px}
+      .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+      .nav-links a[aria-current=page]{color:#fff;background:rgba(79,70,229,.35)}
+      .nav-cta{padding:.5rem 1.15rem;font-size:.875rem;font-weight:500;color:#fff;background:var(--indigo);border-radius:8px}
+      .nav-cta:hover{background:#4338ca}
+      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--white);position:relative}
+      .page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
+      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300;letter-spacing:-.02em}
+      .page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);font-size:1rem;line-height:1.6}
+      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}
+      .section--alt{background:var(--alt)}
+      .wrap{max-width:960px;margin:0 auto}
+      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--navy)}
+      .section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
+      .form-grid{display:flex;flex-direction:column;gap:1rem}
+      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--navy)}
+      input,select,textarea{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid #d1d5db;border-radius:8px;background:var(--white);color:var(--text)}
+      input:focus,select:focus,textarea:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo)}
+      textarea{min-height:80px;resize:vertical}
+      .btn-primary{display:inline-block;margin-top:.5rem;padding:.85rem 1.75rem;font-size:.9375rem;font-weight:500;color:#fff;background:var(--indigo);border:none;border-radius:var(--radius);cursor:pointer}
+      .btn-primary:hover{background:#4338ca}
+      .insight-card{padding:1.5rem;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border-left:4px solid var(--indigo);margin-bottom:1rem}
+      .insight-card h3{margin:0 0 .5rem;font-size:1rem;font-weight:600}
+      .insight-card p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.55}
+      .spy-header{display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+      .spy-grid{display:flex;flex-direction:column;gap:1rem}
+      .spy-card{padding:1.35rem;background:var(--navy);border-radius:var(--radius);border:1px solid rgba(255,255,255,.08);color:#fff}
+      .spy-card h3{margin:0 0 .35rem;font-size:.95rem;font-weight:600;color:#fff}
+      .spy-card .meta{font-family:"JetBrains Mono",monospace;font-size:.65rem;color:rgba(255,255,255,.45);margin-bottom:.75rem}
+      .spy-card p{margin:0;font-size:.85rem;line-height:1.55;color:rgba(255,255,255,.72)}
+      .spy-card .tag{display:inline-block;margin-top:.75rem;padding:.25rem .55rem;font-size:.7rem;background:rgba(255,215,0,.15);color:var(--gold);border-radius:4px}
+      .projection{display:flex;flex-wrap:wrap;gap:1rem}
+      .proj-stat{flex:1 1 140px;padding:1.25rem;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);text-align:center}
+      .proj-stat .val{display:block;font-size:1.75rem;font-weight:600;color:var(--indigo);margin-bottom:.25rem}
+      .proj-stat .lbl{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+      .footer{background:var(--navy);padding:2.5rem clamp(1.25rem,4vw,2.5rem);text-align:center}
+      .footer p{margin:0 0 1rem;font-size:.875rem;color:rgba(255,255,255,.65)}
+      .footer-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center}
+      .footer-nav a{font-size:.875rem;color:rgba(255,255,255,.8)}
+      .footer-nav a:hover{color:var(--gold)}
+      @media(max-width:768px){.nav{flex-wrap:wrap;height:auto;padding:.75rem 1rem}.nav-links{order:3;width:100%;justify-content:center}}
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="logo" href="index.html">StratAI</a>
+      <nav class="nav-links" aria-label="Agents">
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="strategy.html">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <a class="nav-cta" href="research.html">Get Started</a>
+    </header>
+
+    <section class="page-hero">
+      <h1>Research Agent</h1>
+      <p>Map your market position, monitor competitors legally, and project where you can be in 60 days.</p>
+    </section>
+
+    <section class="section section--alt">
+      <div class="wrap">
+        <h2>Company intake</h2>
+        <p class="intro">Tell us about your business and competitors. Gemini agents analyze public signals only.</p>
+        <form class="form-grid" action="#" method="get">
+          <div>
+            <label for="company">Company name</label>
+            <input id="company" name="company" type="text" placeholder="Acme Corp" required />
+          </div>
+          <div>
+            <label for="website">Website URL</label>
+            <input id="website" name="website" type="url" placeholder="https://acme.com" required />
+          </div>
+          <div>
+            <label for="industry">Industry</label>
+            <select id="industry" name="industry" required>
+              <option value="">Select industry</option>
+              <option>B2B SaaS</option>
+              <option>E-commerce</option>
+              <option>Professional services</option>
+              <option>Healthcare</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="c1">Competitor 1 URL</label>
+            <input id="c1" name="competitor1" type="url" placeholder="https://competitor.com" />
+          </div>
+          <div>
+            <label for="c2">Competitor 2 URL</label>
+            <input id="c2" name="competitor2" type="url" placeholder="https://competitor2.com" />
+          </div>
+          <div>
+            <label for="c3">Competitor 3 URL</label>
+            <input id="c3" name="competitor3" type="url" placeholder="https://competitor3.com" />
+          </div>
+          <button type="submit" class="btn-primary">Run research</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Where You Stand Now</h2>
+        <p class="intro">Current positioning analysis based on your site, category, and share of voice.</p>
+        <article class="insight-card">
+          <h3>Positioning snapshot</h3>
+          <p>You are perceived as a <strong>mid-market efficiency play</strong> — strong on ROI messaging, weaker on enterprise trust signals vs. top competitors. Recommended pivot: lead with outcomes + compliance proof points.</p>
+        </article>
+        <article class="insight-card">
+          <h3>Category whitespace</h3>
+          <p>Competitors over-index on feature comparisons. Opportunity to own <strong>“time-to-value in 14 days”</strong> with case-study-led content across LinkedIn and email nurture.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="wrap">
+        <h2>Competitor Intelligence</h2>
+        <p class="intro">Legal competitive intelligence — public keywords, content strategy, estimated reach, and exploitable gaps.</p>
+        <p class="spy-header" aria-hidden="true">● LIVE SIGNAL FEED</p>
+        <div class="spy-grid">
+          <article class="spy-card">
+            <h3>Competitor A — content strategy</h3>
+            <p class="meta">EST. MONTHLY REACH · 124K · UPDATED 2H AGO</p>
+            <p>Top keywords: “workflow automation”, “RevOps stack”, “CRM integration”. Publishing 3× weekly on blog + weekly webinar series. Gap: no vertical-specific landing pages for finance.</p>
+            <span class="tag">Exploit: Finance vertical LP</span>
+          </article>
+          <article class="spy-card">
+            <h3>Competitor B — paid &amp; organic mix</h3>
+            <p class="meta">EST. MONTHLY REACH · 89K · UPDATED 4H AGO</p>
+            <p>Heavy LinkedIn ads on “AI sales” terms. Organic weak on long-tail SEO. Gap: you can win comparison queries with unbiased buyer guides.</p>
+            <span class="tag">Exploit: Comparison content hub</span>
+          </article>
+          <article class="spy-card">
+            <h3>Competitor C — messaging angle</h3>
+            <p class="meta">EST. MONTHLY REACH · 210K · UPDATED 1H AGO</p>
+            <p>Enterprise security-first narrative. Lighter on speed-to-implement. Gap: position StratAI clients on <strong>deploy in days, not quarters</strong>.</p>
+            <span class="tag">Exploit: Speed narrative</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Your 2-Month Growth Projection</h2>
+        <p class="intro">Where you can reach with optimal effort across research-backed channels.</p>
+        <div class="projection">
+          <div class="proj-stat"><span class="val">+38%</span><span class="lbl">Organic traffic</span></div>
+          <div class="proj-stat"><span class="val">2.4×</span><span class="lbl">Qualified leads</span></div>
+          <div class="proj-stat"><span class="val">-22%</span><span class="lbl">CAC vs. today</span></div>
+          <div class="proj-stat"><span class="val">#3</span><span class="lbl">Category rank (est.)</span></div>
+        </div>
+        <article class="insight-card" style="margin-top:1.5rem">
+          <h3>Optimal effort plan</h3>
+          <p>Weeks 1–2: positioning refresh + 3 comparison pages. Weeks 3–6: LinkedIn thought leadership + email nurture. Weeks 7–8: paid retargeting on high-intent keywords identified in competitor gaps.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Powered by Google Gemini</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="research.html">Research</a>
+        <a href="strategy.html">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+    </footer>
+  </body>
+</html>

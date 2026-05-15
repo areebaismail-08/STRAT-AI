@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StratAI — Your AI Marketing Team. Research, Strategy, Content &amp; Analytics. Automated." />
+    <title>StratAI — AI Marketing Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --white: #ffffff;
+        --alt: #f4f7fa;
+        --navy: #1a2b4b;
+        --indigo: #4f46e5;
+        --gold: #ffd700;
+        --text: #1f2937;
+        --text-muted: #6b7280;
+        --radius: 12px;
+        --shadow: 0 4px 24px rgba(26, 43, 75, 0.08);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      body { margin: 0; font-family: "Inter", system-ui, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+      a { color: inherit; text-decoration: none; }
+      .skip { position: absolute; left: -9999px; top: 0; padding: 0.75rem 1rem; background: var(--indigo); color: #fff; z-index: 100; }
+      .skip:focus { left: 1rem; top: 1rem; }
+      .nav { display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem, 4vw, 2.5rem); height: 4rem; background: var(--navy); position: sticky; top: 0; z-index: 50; }
+      .logo { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 1.15rem; color: #fff; }
+      .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; justify-content: center; }
+      .nav-links a { padding: 0.5rem 0.85rem; font-size: 0.875rem; color: rgba(255,255,255,0.75); border-radius: 8px; transition: color 0.15s, background 0.15s; }
+      .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+      .nav-cta { padding: 0.5rem 1.15rem; font-size: 0.875rem; font-weight: 500; color: #fff; background: var(--indigo); border-radius: 8px; transition: background 0.15s, box-shadow 0.15s; }
+      .nav-cta:hover { background: #4338ca; box-shadow: 0 4px 16px rgba(79,70,229,0.35); }
+      .hero { position: relative; text-align: center; padding: clamp(4rem, 12vw, 7rem) clamp(1.25rem, 4vw, 2rem) clamp(5rem, 14vw, 8rem); background: var(--white); overflow: hidden; }
+      .hero::before { content: ""; position: absolute; left: 50%; top: 35%; transform: translate(-50%, -50%); width: min(90vw, 720px); height: min(60vh, 480px); background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(79,70,229,0.12) 0%, rgba(79,70,229,0.04) 45%, transparent 70%); pointer-events: none; }
+      .hero-inner { position: relative; max-width: 52rem; margin: 0 auto; }
+      .hero h1 { margin: 0 0 1.25rem; font-size: clamp(1.85rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.03em; }
+      .hero .sub { margin: 0 auto 2.25rem; max-width: 36rem; font-size: 1.125rem; line-height: 1.65; color: var(--text-muted); }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+      .btn-primary { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: #fff; background: var(--indigo); border-radius: var(--radius); transition: background 0.15s, box-shadow 0.15s; }
+      .btn-primary:hover { background: #4338ca; box-shadow: 0 6px 20px rgba(79,70,229,0.3); }
+      .btn-outline { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: var(--indigo); background: transparent; border: 2px solid var(--indigo); border-radius: var(--radius); transition: background 0.15s; }
+      .btn-outline:hover { background: rgba(79,70,229,0.06); }
+      .agents { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--alt); }
+      .agents h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; }
+      .agents .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--text-muted); }
+      .agent-grid { display: flex; flex-wrap: wrap; gap: 1.25rem; max-width: 1100px; margin: 0 auto; justify-content: center; }
+      .agent-card { flex: 1 1 220px; max-width: 260px; padding: 1.75rem 1.5rem; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid rgba(26,43,75,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+      .agent-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,43,75,0.12); }
+      .agent-icon { font-size: 2rem; margin-bottom: 1rem; }
+      .agent-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 600; color: var(--navy); }
+      .agent-card p { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--text-muted); }
+      .agent-card .link { display: inline-block; margin-top: 1rem; font-size: 0.8125rem; font-weight: 500; color: var(--indigo); }
+      .footer { background: var(--navy); padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem); text-align: center; }
+      .footer p { margin: 0 0 1rem; font-size: 0.875rem; color: rgba(255,255,255,0.65); }
+      .footer-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; justify-content: center; }
+      .footer-nav a { font-size: 0.875rem; color: rgba(255,255,255,0.8); }
+      .footer-nav a:hover { color: var(--gold); }
+      @media (max-width: 768px) { .nav { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; } .nav-links { order: 3; width: 100%; } }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <a class="logo" href="index.html">StratAI</a>
+      <nav class="nav-links" aria-label="Agents">
+        <a href="research.html">Research</a>
+        <a href="strategy.html">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <a class="nav-cta" href="research.html">Get Started</a>
+    </header>
+    <main id="main">
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Your AI Marketing Team — Research, Strategy, Content &amp; Analytics. Automated.</h1>
+          <p class="sub">Bridge the gap between technical capability and tangible business outcomes.</p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="research.html">Get Started</a>
+            <a class="btn-outline" href="#agents">See How It Works</a>
+          </div>
+        </div>
+      </section>
+      <section class="agents" id="agents">
+        <h2>Four intelligent agents. One pipeline.</h2>
+        <p class="lead">Each agent specializes in a core marketing discipline—connected end to end by Google Gemini.</p>
+        <div class="agent-grid">
+          <a class="agent-card" href="research.html">
+            <div class="agent-icon" aria-hidden="true">🔍</div>
+            <h3>Research</h3>
+            <p>Market positioning, competitor intelligence, and growth projections.</p>
+            <span class="link">Explore Research →</span>
+          </a>
+          <a class="agent-card" href="strategy.html">
+            <div class="agent-icon" aria-hidden="true">🧠</div>
+            <h3>Strategy</h3>
+            <p>Full campaign plans with channels, messaging, and timelines.</p>
+            <span class="link">Explore Strategy →</span>
+          </a>
+          <a class="agent-card" href="content.html">
+            <div class="agent-icon" aria-hidden="true">✍️</div>
+            <h3>Content</h3>
+            <p>Ad copy, email, social posts, and blog outlines on brand.</p>
+            <span class="link">Explore Content →</span>
+          </a>
+          <a class="agent-card" href="analytics.html">
+            <div class="agent-icon" aria-hidden="true">📊</div>
+            <h3>Analytics</h3>
+            <p>KPI analysis, recommendations, and performance forecasts.</p>
+            <span class="link">Explore Analytics →</span>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <p>Powered by Google Gemini</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="research.html">Research</a>
+        <a href="strategy.html">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StratAI Strategy — AI campaign planning and messaging." />
+    <title>Strategy — StratAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root{--white:#fff;--alt:#f4f7fa;--navy:#1a2b4b;--indigo:#4f46e5;--gold:#ffd700;--text:#1f2937;--muted:#6b7280;--radius:12px;--shadow:0 4px 24px rgba(26,43,75,.08)}
+      *,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+      .nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,2.5rem);height:4rem;background:var(--navy);position:sticky;top:0;z-index:50}
+      .logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.15rem;color:#fff}
+      .nav-links{display:flex;gap:.25rem;flex-wrap:wrap}.nav-links a{padding:.5rem .85rem;font-size:.875rem;color:rgba(255,255,255,.75);border-radius:8px}.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-links a[aria-current=page]{color:#fff;background:rgba(79,70,229,.35)}
+      .nav-cta{padding:.5rem 1.15rem;font-size:.875rem;font-weight:500;color:#fff;background:var(--indigo);border-radius:8px}.nav-cta:hover{background:#4338ca}
+      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--white);position:relative}.page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
+      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300}.page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);line-height:1.6}
+      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}.section--alt{background:var(--alt)}.wrap{max-width:960px;margin:0 auto}
+      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--navy)}.section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
+      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--navy)}input,select,textarea{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid #d1d5db;border-radius:8px}input:focus,select:focus,textarea:focus{outline:2px solid var(--indigo);outline-offset:1px}
+      .form-grid{display:flex;flex-direction:column;gap:1rem}textarea{min-height:100px;resize:vertical}
+      .btn-primary{display:inline-block;margin-top:.5rem;padding:.85rem 1.75rem;font-size:.9375rem;font-weight:500;color:#fff;background:var(--indigo);border:none;border-radius:var(--radius);cursor:pointer}.btn-primary:hover{background:#4338ca}
+      .output-card{padding:1.5rem;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:1rem;border:1px solid rgba(26,43,75,.06)}
+      .output-card h3{margin:0 0 .75rem;font-size:1rem;font-weight:600;color:var(--navy)}.output-card ul{margin:0;padding-left:1.2rem;font-size:.9rem;color:var(--muted);line-height:1.7}
+      .timeline{margin-top:1rem;padding:1rem;background:var(--alt);border-radius:8px;font-size:.875rem;color:var(--muted);line-height:1.8}
+      .footer{background:var(--navy);padding:2.5rem clamp(1.25rem,4vw,2.5rem);text-align:center}.footer p{margin:0 0 1rem;font-size:.875rem;color:rgba(255,255,255,.65)}.footer-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center}.footer-nav a{font-size:.875rem;color:rgba(255,255,255,.8)}.footer-nav a:hover{color:var(--gold)}
+      @media(max-width:768px){.nav{flex-wrap:wrap;height:auto;padding:.75rem 1rem}.nav-links{order:3;width:100%;justify-content:center}}
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="logo" href="index.html">StratAI</a>
+      <nav class="nav-links" aria-label="Agents">
+        <a href="research.html">Research</a>
+        <a href="strategy.html" aria-current="page">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <a class="nav-cta" href="research.html">Get Started</a>
+    </header>
+    <section class="page-hero">
+      <h1>Strategy Agent</h1>
+      <p>Turn goals and constraints into a full campaign strategy — channels, messaging, and timeline.</p>
+    </section>
+    <section class="section section--alt">
+      <div class="wrap">
+        <h2>Campaign brief</h2>
+        <p class="intro">Define your campaign parameters. The strategy agent builds a cohesive plan powered by Gemini.</p>
+        <form class="form-grid" action="#" method="get">
+          <div><label for="goal">Campaign goal</label><input id="goal" name="goal" type="text" placeholder="e.g. Generate 200 MQLs in Q2" required /></div>
+          <div><label for="audience">Target audience</label><input id="audience" name="audience" type="text" placeholder="e.g. VP Marketing, mid-market SaaS" required /></div>
+          <div><label for="budget">Budget</label><input id="budget" name="budget" type="text" placeholder="e.g. $45,000 / quarter" required /></div>
+          <div><label for="timeline">Timeline</label><select id="timeline" name="timeline" required><option value="">Select timeline</option><option>4 weeks</option><option>8 weeks</option><option>12 weeks</option><option>6 months</option></select></motion>
+          <button type="submit" class="btn-primary">Generate strategy</button>
+        </form>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>Campaign strategy output</h2>
+        <p class="intro">Sample strategy generated from your brief — channels, messaging pillars, and phased timeline.</p>
+        <article class="output-card">
+          <h3>Channels &amp; mix</h3>
+          <ul>
+            <li><strong>LinkedIn</strong> — 35% budget · thought leadership + retargeting</li>
+            <li><strong>Email nurture</strong> — 25% · 5-touch sequence from MQL to SQL</li>
+            <li><strong>SEO / content</strong> — 25% · 3 pillar pages + comparison hub</li>
+            <li><strong>Paid search</strong> — 15% · high-intent branded + category terms</li>
+          </ul>
+        </article>
+        <article class="output-card">
+          <h3>Messaging pillars</h3>
+          <ul>
+            <li><strong>Outcome-first:</strong> “Ship campaigns in days, not quarters.”</li>
+            <li><strong>Proof:</strong> Customer metrics + analyst mentions</li>
+            <li><strong>Differentiation:</strong> Four-agent pipeline vs. single chat tools</li>
+          </ul>
+        </article>
+        <article class="output-card">
+          <h3>Timeline</h3>
+          <div class="timeline">
+            <strong>Weeks 1–2:</strong> Messaging lock + landing page refresh<br />
+            <strong>Weeks 3–5:</strong> Content sprint + nurture launch<br />
+            <strong>Weeks 6–8:</strong> Paid scale + weekly optimization reviews<br />
+            <strong>Weeks 9–12:</strong> Expand winners · cut underperformers · exec readout
+          </div>
+        </article>
+      </div>
+    </section>
+    <footer class="footer">
+      <p>Powered by Google Gemini</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="research.html">Research</a><a href="strategy.html">Strategy</a><a href="content.html">Content</a><a href="analytics.html">Analytics</a>
+      </nav>
+    </footer>
+  </body>
+</html>
