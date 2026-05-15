@@ -32,17 +32,184 @@
       .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
       .nav-cta { padding: 0.5rem 1.15rem; font-size: 0.875rem; font-weight: 500; color: #fff; background: var(--indigo); border-radius: 8px; transition: background 0.15s, box-shadow 0.15s; }
       .nav-cta:hover { background: #4338ca; box-shadow: 0 4px 16px rgba(79,70,229,0.35); }
-      .hero { position: relative; text-align: center; padding: clamp(4rem, 12vw, 7rem) clamp(1.25rem, 4vw, 2rem) clamp(5rem, 14vw, 8rem); background: var(--white); overflow: hidden; }
-      .hero::before { content: ""; position: absolute; left: 50%; top: 35%; transform: translate(-50%, -50%); width: min(90vw, 720px); height: min(60vh, 480px); background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(79,70,229,0.12) 0%, rgba(79,70,229,0.04) 45%, transparent 70%); pointer-events: none; }
+
+      /* FIX 1: Hero background - dark #050911 with gradients and dot grid */
+      .hero {
+        position: relative;
+        text-align: center;
+        padding: clamp(4rem, 12vw, 7rem) clamp(1.25rem, 4vw, 2rem) clamp(5rem, 14vw, 8rem);
+        background:
+          radial-gradient(ellipse 70% 60% at 50% 40%, rgba(79,70,229,0.12) 0%, transparent 65%),
+          radial-gradient(ellipse 50% 45% at 85% 90%, rgba(0,209,255,0.06) 0%, transparent 60%),
+          #050911;
+        background-image:
+          radial-gradient(ellipse 70% 60% at 50% 40%, rgba(79,70,229,0.12) 0%, transparent 65%),
+          radial-gradient(ellipse 50% 45% at 85% 90%, rgba(0,209,255,0.06) 0%, transparent 60%),
+          radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+        background-size: 100% 100%, 100% 100%, 40px 40px;
+        overflow: hidden;
+      }
+
       .hero-inner { position: relative; max-width: 52rem; margin: 0 auto; }
-      .hero h1 { margin: 0 0 1.25rem; font-size: clamp(1.85rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.03em; }
-      .hero .sub { margin: 0 auto 2.25rem; max-width: 36rem; font-size: 1.125rem; line-height: 1.65; color: var(--text-muted); }
-      .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+
+      /* FIX 2: Gemini badge */
+      .gemini-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        padding: 0.35rem 0.9rem;
+        background: rgba(10, 16, 32, 0.8);
+        border: 1px solid rgba(79,70,229,0.3);
+        border-radius: 999px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #a5b4fc;
+        box-shadow: 0 0 12px rgba(79,70,229,0.15);
+      }
+      .badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4f46e5;
+        box-shadow: 0 0 6px rgba(79,70,229,0.8);
+        animation: pulse-dot 2s ease-in-out infinite;
+        flex-shrink: 0;
+      }
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.7); }
+      }
+
+      .hero h1 { margin: 0 0 1.25rem; font-size: clamp(1.85rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.03em; color: #f0f4ff; }
+      .hero .sub { margin: 0 auto 2.25rem; max-width: 38rem; font-size: 1.125rem; line-height: 1.65; color: rgba(200,210,240,0.75); }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; }
       .btn-primary { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: #fff; background: var(--indigo); border-radius: var(--radius); transition: background 0.15s, box-shadow 0.15s; }
       .btn-primary:hover { background: #4338ca; box-shadow: 0 6px 20px rgba(79,70,229,0.3); }
-      .btn-outline { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: var(--indigo); background: transparent; border: 2px solid var(--indigo); border-radius: var(--radius); transition: background 0.15s; }
-      .btn-outline:hover { background: rgba(79,70,229,0.06); }
-      .agents { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--alt); }
+      .btn-outline { padding: 0.85rem 1.75rem; font-size: 0.9375rem; font-weight: 500; color: #a5b4fc; background: transparent; border: 2px solid rgba(79,70,229,0.5); border-radius: var(--radius); transition: background 0.15s, border-color 0.15s; }
+      .btn-outline:hover { background: rgba(79,70,229,0.1); border-color: rgba(79,70,229,0.8); }
+
+      /* FIX 4: Terminal output card */
+      .terminal-card {
+        max-width: 680px;
+        margin: 0 auto;
+        background: #0a1020;
+        border: 1px solid rgba(79,70,229,0.35);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,70,229,0.1);
+        text-align: left;
+      }
+      .terminal-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        background: #0d1525;
+        border-bottom: 1px solid rgba(79,70,229,0.2);
+      }
+      .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+      .terminal-dot.red { background: #ff5f57; }
+      .terminal-dot.yellow { background: #febc2e; }
+      .terminal-dot.green { background: #28c840; }
+      .terminal-title {
+        margin-left: 0.5rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: rgba(165,180,252,0.7);
+        text-transform: uppercase;
+      }
+      .terminal-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+      .terminal-line {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 0.75rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.775rem;
+        line-height: 1.5;
+      }
+      .terminal-label {
+        font-weight: 700;
+        color: rgba(165,180,252,0.9);
+        letter-spacing: 0.04em;
+      }
+      .terminal-label.research { color: #60a5fa; }
+      .terminal-label.strategy { color: #a78bfa; }
+      .terminal-label.content { color: #34d399; }
+      .terminal-label.analytics { color: #fbbf24; }
+      .terminal-text { color: rgba(210,220,240,0.75); }
+      .terminal-text .num { color: #4ade80; font-weight: 700; }
+
+      /* FIX 5: Pipeline section */
+      .pipeline { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: #050911; }
+      .pipeline h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: #f0f4ff; }
+      .pipeline .lead { text-align: center; margin: 0 auto 2.75rem; max-width: 32rem; font-size: 0.9375rem; color: rgba(200,210,240,0.6); }
+      .pipeline-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .pipeline-box {
+        flex: 1 1 160px;
+        max-width: 210px;
+        padding: 1.5rem 1.25rem;
+        background: #0a1020;
+        border: 1px solid rgba(79,70,229,0.25);
+        border-radius: 10px;
+        text-align: center;
+      }
+      .pipeline-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: rgba(79,70,229,0.7);
+        margin-bottom: 0.5rem;
+      }
+      .pipeline-icon { font-size: 1.75rem; margin-bottom: 0.6rem; }
+      .pipeline-box h3 { margin: 0 0 0.35rem; font-size: 0.9375rem; font-weight: 600; color: #e2e8f0; }
+      .pipeline-box p { margin: 0; font-size: 0.8rem; color: rgba(200,210,240,0.55); line-height: 1.4; }
+      .pipeline-arrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.25rem;
+        color: rgba(79,70,229,0.6);
+        padding: 0 0.5rem;
+        flex-shrink: 0;
+        align-self: center;
+      }
+      @media (max-width: 640px) {
+        .pipeline-row { flex-direction: column; align-items: center; }
+        .pipeline-arrow { transform: rotate(90deg); }
+      }
+
+      /* FIX 6: Without/With comparison */
+      .compare { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--alt); }
+      .compare h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; color: var(--navy); }
+      .compare .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--text-muted); }
+      .compare-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+      .compare-col { flex: 1 1 300px; padding: 1.75rem; border-radius: var(--radius); background: var(--white); }
+      .compare-col.without { border: 2px solid rgba(239,68,68,0.4); }
+      .compare-col.with { border: 2px solid rgba(79,70,229,0.45); }
+      .compare-col h3 { margin: 0 0 1.25rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-family: "JetBrains Mono", monospace; }
+      .compare-col.without h3 { color: #ef4444; }
+      .compare-col.with h3 { color: var(--indigo); }
+      .compare-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.65rem; }
+      .compare-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; line-height: 1.45; color: var(--text); }
+      .compare-list li::before { flex-shrink: 0; font-size: 0.8rem; margin-top: 0.1rem; }
+      .compare-col.without .compare-list li::before { content: "✗"; color: #ef4444; font-weight: 700; }
+      .compare-col.with .compare-list li::before { content: "✓"; color: var(--indigo); font-weight: 700; }
+
+      /* AGENTS */
+      .agents { padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem); background: var(--white); }
       .agents h2 { text-align: center; margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 500; }
       .agents .lead { text-align: center; margin: 0 auto 2.5rem; max-width: 32rem; font-size: 0.9375rem; color: var(--text-muted); }
       .agent-grid { display: flex; flex-wrap: wrap; gap: 1.25rem; max-width: 1100px; margin: 0 auto; justify-content: center; }
@@ -52,12 +219,19 @@
       .agent-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 600; color: var(--navy); }
       .agent-card p { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--text-muted); }
       .agent-card .link { display: inline-block; margin-top: 1rem; font-size: 0.8125rem; font-weight: 500; color: var(--indigo); }
+
+      /* FOOTER */
       .footer { background: var(--navy); padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem); text-align: center; }
       .footer p { margin: 0 0 1rem; font-size: 0.875rem; color: rgba(255,255,255,0.65); }
       .footer-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; justify-content: center; }
       .footer-nav a { font-size: 0.875rem; color: rgba(255,255,255,0.8); }
       .footer-nav a:hover { color: var(--gold); }
-      @media (max-width: 768px) { .nav { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; } .nav-links { order: 3; width: 100%; } }
+
+      @media (max-width: 768px) {
+        .nav { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; }
+        .nav-links { order: 3; width: 100%; }
+        .terminal-line { grid-template-columns: 80px 1fr; font-size: 0.7rem; }
+      }
     </style>
   </head>
   <body>
@@ -75,17 +249,111 @@
     <main id="main">
       <section class="hero">
         <div class="hero-inner">
+          <div class="gemini-badge">
+            <span class="badge-dot" aria-hidden="true"></span>
+            Powered by Google Gemini
+          </div>
+
           <h1>Your AI Marketing Team — Research, Strategy, Content &amp; Analytics. Automated.</h1>
-          <p class="sub">Bridge the gap between technical capability and tangible business outcomes.</p>
+
+          <p class="sub">StratAI gives enterprises a full AI marketing team — from competitor research to campaign strategy to published content — in minutes, not months.</p>
+
           <div class="hero-actions">
             <a class="btn-primary" href="research.html">Get Started</a>
             <a class="btn-outline" href="#agents">See How It Works</a>
           </div>
+
+          <div class="terminal-card" role="img" aria-label="StratAI live output preview">
+            <div class="terminal-titlebar">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+              <span class="terminal-title">StratAI Live Output</span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <span class="terminal-label research">RESEARCH</span>
+                <span class="terminal-text">Analyzed <span class="num">3</span> competitors &middot; Found <span class="num">12</span> content gaps &middot; Market opportunity: <span class="num">+23%</span></span>
+              </div>
+              <div class="terminal-line">
+                <span class="terminal-label strategy">STRATEGY</span>
+                <span class="terminal-text">LinkedIn + Email &middot; <span class="num">8</span>-week sprint &middot; <span class="num">40%</span> awareness / <span class="num">60%</span> conversion</span>
+              </div>
+              <div class="terminal-line">
+                <span class="terminal-label content">CONTENT</span>
+                <span class="terminal-text"><span class="num">6</span> ad variants &middot; <span class="num">3</span> email sequences &middot; <span class="num">4</span> LinkedIn posts generated</span>
+              </div>
+              <div class="terminal-line">
+                <span class="terminal-label analytics">ANALYTICS</span>
+                <span class="terminal-text">Projected CTR: <span class="num">4.2%</span> &middot; Est. leads/month: <span class="num">340</span> &middot; ROI forecast: <span class="num">+280%</span></span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      <section class="pipeline">
+        <h2>One prompt. Four agents. Full campaign.</h2>
+        <p class="lead">Each agent hands off to the next — no human coordination required.</p>
+        <div class="pipeline-row">
+          <div class="pipeline-box">
+            <div class="pipeline-num">AGENT 01</div>
+            <div class="pipeline-icon" aria-hidden="true">🔍</div>
+            <h3>Research</h3>
+            <p>Competitor intelligence &amp; market gaps</p>
+          </div>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <div class="pipeline-box">
+            <div class="pipeline-num">AGENT 02</div>
+            <div class="pipeline-icon" aria-hidden="true">🧠</div>
+            <h3>Strategy</h3>
+            <p>Campaign plan, channels &amp; timeline</p>
+          </div>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <div class="pipeline-box">
+            <div class="pipeline-num">AGENT 03</div>
+            <div class="pipeline-icon" aria-hidden="true">✍️</div>
+            <h3>Content</h3>
+            <p>On-brand copy across every channel</p>
+          </div>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <div class="pipeline-box">
+            <div class="pipeline-num">AGENT 04</div>
+            <div class="pipeline-icon" aria-hidden="true">📊</div>
+            <h3>Analytics</h3>
+            <p>KPI forecasts &amp; optimization signals</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="compare">
+        <h2>The difference is clear.</h2>
+        <p class="lead">Traditional marketing ops vs. the StratAI pipeline.</p>
+        <div class="compare-grid">
+          <div class="compare-col without">
+            <h3>Without StratAI</h3>
+            <ul class="compare-list">
+              <li>6-week campaign planning cycles</li>
+              <li>Siloed teams</li>
+              <li>Reactive decisions</li>
+              <li>$80K+ agency costs</li>
+            </ul>
+          </div>
+          <div class="compare-col with">
+            <h3>With StratAI</h3>
+            <ul class="compare-list">
+              <li>Full campaign in minutes</li>
+              <li>4 coordinated AI agents</li>
+              <li>Real-time competitor intelligence</li>
+              <li>Fraction of the cost</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section class="agents" id="agents">
         <h2>Four intelligent agents. One pipeline.</h2>
-        <p class="lead">Each agent specializes in a core marketing discipline—connected end to end by Google Gemini.</p>
+        <p class="lead">Each agent specializes in a core marketing discipline — connected end to end by Google Gemini.</p>
         <div class="agent-grid">
           <a class="agent-card" href="research.html">
             <div class="agent-icon" aria-hidden="true">🔍</div>
