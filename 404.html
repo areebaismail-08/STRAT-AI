@@ -3,96 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 — StratAI</title>
+    <title>404 — StratAI Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
+      :root {
+        --bg-primary: #0f0f12;
+        --text-primary: #e8eaed;
+        --text-secondary: #999ba3;
+        --accent: #6aa8ff;
+        --accent-alt: #00d4ff;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
       body {
-        margin: 0;
-        min-height: 100dvh;
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        text-align: center;
+        min-height: 100vh;
         padding: 2rem;
-        font-family: "Inter", system-ui, sans-serif;
-        background: #050911;
-        color: #E8EDF5;
         -webkit-font-smoothing: antialiased;
       }
-      .logo {
-        font-family: "JetBrains Mono", monospace;
+      .container {
+        text-align: center;
+        max-width: 600px;
+      }
+      .code {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 3rem;
         font-weight: 700;
-        font-size: 1.25rem;
-        color: #fff;
-        margin-bottom: 2rem;
-        text-decoration: none;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        letter-spacing: 0.08em;
       }
       h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
         margin: 0 0 0.75rem;
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 300;
         letter-spacing: -0.02em;
       }
       p {
-        margin: 0 0 2rem;
+        color: var(--text-secondary);
         font-size: 1rem;
-        color: rgba(232, 237, 245, 0.65);
-        max-width: 24rem;
         line-height: 1.6;
+        margin: 0 0 2rem;
       }
-      .countdown {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #FFD700;
-        margin-bottom: 0.5rem;
-      }
-      .countdown-label {
-        font-size: 0.8125rem;
-        color: rgba(232, 237, 245, 0.45);
-        margin-bottom: 2rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .link {
+      .button {
         display: inline-block;
-        padding: 0.75rem 1.5rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #fff;
-        background: #4F46E5;
-        border-radius: 8px;
+        padding: 0.75rem 1.75rem;
+        background: var(--accent);
+        color: var(--bg-primary);
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
         text-decoration: none;
-        transition: background 0.15s;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
       }
-      .link:hover {
-        background: #4338ca;
+      .button:hover {
+        background: var(--accent-alt);
+        box-shadow: 0 0 20px rgba(0,212,255,0.4);
       }
     </style>
   </head>
   <body>
-    <a class="logo" href="index.html">StratAI</a>
-    <h1>404 — Page Not Found</h1>
-    <p>The page you requested does not exist. You will be redirected to the homepage shortly.</p>
-    <p class="countdown" id="timer" aria-live="polite">5</p>
-    <p class="countdown-label">Seconds until redirect</p>
-    <a class="link" href="index.html">Go to homepage now</a>
-    <script>
-      (function () {
-        var seconds = 5;
-        var el = document.getElementById("timer");
-        var tick = setInterval(function () {
-          seconds -= 1;
-          if (el) el.textContent = String(seconds);
-          if (seconds <= 0) {
-            clearInterval(tick);
-            window.location.href = "index.html";
-          }
-        }, 1000);
-      })();
-    </script>
+    <div class="container">
+      <div class="code">404</div>
+      <h1>Sector Not Found</h1>
+      <p>The operational zone you requested does not exist in the StratAI command network. Verify your coordinates and try again.</p>
+      <a href="index.html" class="button">Return to Command Center</a>
+    </div>
   </body>
 </html>

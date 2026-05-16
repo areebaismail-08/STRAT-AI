@@ -3,201 +3,236 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="StratAI Research — market positioning and competitor intelligence." />
-    <title>Research — StratAI</title>
+    <meta name="description" content="StratAI Research Agent — Market Intelligence &amp; Competitive Analysis" />
+    <title>Research Agent — StratAI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --bg: #050911;
-        --bg2: #080d17;
-        --bg3: #0d1525;
-        --card: #0a1020;
-        --navy: #1A2B4B;
-        --indigo: #4F46E5;
-        --cyan: #00D1FF;
-        --gold: #FFD700;
-        --text: #E8EDF5;
-        --muted: #6B7A99;
-        --border: rgba(255,255,255,0.06);
-        --radius: 12px;
+        --bg-primary: #0f0f12;
+        --bg-secondary: #1a1a1f;
+        --bg-tertiary: #252530;
+        --bg-panel: #13131a;
+        --border: rgba(255,255,255,0.08);
+        --border-accent: rgba(106,168,255,0.15);
+        --text-primary: #e8eaed;
+        --text-secondary: #999ba3;
+        --text-muted: #6d7080;
+        --accent: #6aa8ff;
+        --accent-alt: #00d4ff;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --critical: #e74c3c;
       }
-      *,*::before,*::after{box-sizing:border-box}
-      body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
-      a{color:inherit;text-decoration:none}
-      .nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,2.5rem);height:4rem;background:var(--navy);position:sticky;top:0;z-index:50}
-      .logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.15rem;color:#fff}
-      .nav-links{display:flex;gap:.25rem;flex-wrap:wrap}
-      .nav-links a{padding:.5rem .85rem;font-size:.875rem;color:rgba(255,255,255,.75);border-radius:8px}
-      .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
-      .nav-links a[aria-current=page]{color:#fff;background:rgba(79,70,229,.35)}
-      .nav-cta{padding:.5rem 1.15rem;font-size:.875rem;font-weight:500;color:#fff;background:var(--indigo);border-radius:8px}
-      .nav-cta:hover{background:#4338ca}
-      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--bg);position:relative}
-      .page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
-      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300;letter-spacing:-.02em;color:var(--text)}
-      .page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);font-size:1rem;line-height:1.6}
-      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}
-      .section--alt{background:var(--bg2)}
-      .wrap{max-width:960px;margin:0 auto}
-      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--text)}
-      .section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
-      .form-grid{display:flex;flex-direction:column;gap:1rem}
-      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--text)}
-      input,select,textarea{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text)}
-      input:focus,select:focus,textarea:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo)}
-      textarea{min-height:80px;resize:vertical}
-      .btn-primary{display:inline-block;margin-top:.5rem;padding:.85rem 1.75rem;font-size:.9375rem;font-weight:500;color:#fff;background:var(--indigo);border:none;border-radius:var(--radius);cursor:pointer}
-      .btn-primary:hover{background:#4338ca}
-      .insight-card{padding:1.5rem;background:var(--card);border-radius:var(--radius);border-left:4px solid var(--indigo);margin-bottom:1rem;border:1px solid var(--border);border-left:4px solid var(--indigo)}
-      .insight-card h3{margin:0 0 .5rem;font-size:1rem;font-weight:600;color:var(--text)}
-      .insight-card p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.55}
-      .spy-header{display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
-      .spy-grid{display:flex;flex-direction:column;gap:1rem}
-      .spy-card{padding:1.35rem;background:var(--card);border-radius:var(--radius);border:1px solid rgba(79,70,229,.2);color:var(--text)}
-      .spy-card h3{margin:0 0 .35rem;font-size:.95rem;font-weight:600;color:var(--text)}
-      .spy-card .meta{font-family:"JetBrains Mono",monospace;font-size:.65rem;color:var(--muted);margin-bottom:.75rem}
-      .spy-card p{margin:0;font-size:.85rem;line-height:1.55;color:var(--muted)}
-      .spy-card .tag{display:inline-block;margin-top:.75rem;padding:.25rem .55rem;font-size:.7rem;background:rgba(255,215,0,.15);color:var(--gold);border-radius:4px}
-      .projection{display:flex;flex-wrap:wrap;gap:1rem}
-      .proj-stat{flex:1 1 140px;padding:1.25rem;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);text-align:center}
-      .proj-stat .val{display:block;font-size:1.75rem;font-weight:600;color:var(--indigo);margin-bottom:.25rem}
-      .proj-stat .lbl{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-      .footer{background:var(--navy);padding:2.5rem clamp(1.25rem,4vw,2.5rem);text-align:center}
-      .footer p{margin:0 0 1rem;font-size:.875rem;color:rgba(255,255,255,.65)}
-      .footer-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center}
-      .footer-nav a{font-size:.875rem;color:rgba(255,255,255,.8)}
-      .footer-nav a:hover{color:var(--gold)}
-      @media(max-width:768px){.nav{flex-wrap:wrap;height:auto;padding:.75rem 1rem}.nav-links{order:3;width:100%;justify-content:center}}
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .header {
+        margin-bottom: 2rem;
+      }
+      .nav-breadcrumb {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .nav-breadcrumb a {
+        color: var(--accent);
+      }
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .subheader {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .grid { display: grid; gap: 1.5rem; }
+      .card {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.5rem;
+        transition: all 0.2s;
+      }
+      .card:hover {
+        border-color: var(--border-accent);
+        box-shadow: 0 0 16px rgba(106,168,255,0.1);
+      }
+      .card-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .card-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+      }
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .stat {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.25rem;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .button {
+        padding: 0.6rem 1.25rem;
+        background: var(--accent);
+        color: var(--bg-primary);
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
+      }
+      .button:hover {
+        background: var(--accent-alt);
+        box-shadow: 0 0 16px rgba(0,212,255,0.3);
+      }
+      .button.secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--border-accent);
+      }
+      .button.secondary:hover {
+        background: rgba(106,168,255,0.1);
+      }
+      .list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .list li {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-secondary);
+      }
+      .list li:last-child {
+        border-bottom: none;
+      }
+      .highlight {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(106,168,255,0.2);
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
-    <header class="nav">
-      <a class="logo" href="index.html">StratAI</a>
-      <nav class="nav-links" aria-label="Agents">
-        <a href="research.html" aria-current="page">Research</a>
-        <a href="strategy.html">Strategy</a>
-        <a href="content.html">Content</a>
-        <a href="analytics.html">Analytics</a>
-      </nav>
-      <a class="nav-cta" href="research.html">Get Started</a>
-    </header>
-
-    <section class="page-hero">
-      <h1>Research Agent</h1>
-      <p>Map your market position, monitor competitors legally, and project where you can be in 60 days.</p>
-    </section>
-
-    <section class="section section--alt">
-      <div class="wrap">
-        <h2>Company intake</h2>
-        <p class="intro">Tell us about your business and competitors. Gemini agents analyze public signals only.</p>
-        <form class="form-grid" action="#" method="get">
-          <div>
-            <label for="company">Company name</label>
-            <input id="company" name="company" type="text" placeholder="Acme Corp" required />
-          </div>
-          <div>
-            <label for="website">Website URL</label>
-            <input id="website" name="website" type="url" placeholder="https://acme.com" required />
-          </div>
-          <div>
-            <label for="industry">Industry</label>
-            <select id="industry" name="industry" required>
-              <option value="">Select industry</option>
-              <option>B2B SaaS</option>
-              <option>E-commerce</option>
-              <option>Professional services</option>
-              <option>Healthcare</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div>
-            <label for="c1">Competitor 1 URL</label>
-            <input id="c1" name="competitor1" type="url" placeholder="https://competitor.com" />
-          </div>
-          <div>
-            <label for="c2">Competitor 2 URL</label>
-            <input id="c2" name="competitor2" type="url" placeholder="https://competitor2.com" />
-          </div>
-          <div>
-            <label for="c3">Competitor 3 URL</label>
-            <input id="c3" name="competitor3" type="url" placeholder="https://competitor3.com" />
-          </div>
-          <button type="submit" class="btn-primary">Run research</button>
-        </form>
+    <div class="container">
+      <div class="header">
+        <div class="nav-breadcrumb"><a href="index.html">← Back to Command Center</a></div>
+        <h1>Research Agent</h1>
+        <p class="subheader">Market intelligence, competitor analysis, and growth projections powered by AI-driven reconnaissance.</p>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="wrap">
-        <h2>Where You Stand Now</h2>
-        <p class="intro">Current positioning analysis based on your site, category, and share of voice.</p>
-        <article class="insight-card">
-          <h3>Positioning snapshot</h3>
-          <p>You are perceived as a <strong>mid-market efficiency play</strong> — strong on ROI messaging, weaker on enterprise trust signals vs. top competitors. Recommended pivot: lead with outcomes + compliance proof points.</p>
-        </article>
-        <article class="insight-card">
-          <h3>Category whitespace</h3>
-          <p>Competitors over-index on feature comparisons. Opportunity to own <strong>"time-to-value in 14 days"</strong> with case-study-led content across LinkedIn and email nurture.</p>
-        </article>
-      </div>
-    </section>
+      <div class="grid">
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-label">Market Position</div>
+            <div class="stat-value">#2</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Share of Voice</div>
+            <div class="stat-value">23.4%</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Competitive Gap</div>
+            <div class="stat-value">7 months</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Market Opportunity</div>
+            <div class="stat-value">$2.3B</div>
+          </div>
+        </div>
 
-    <section class="section section--alt">
-      <div class="wrap">
-        <h2>Competitor Intelligence</h2>
-        <p class="intro">Legal competitive intelligence — public keywords, content strategy, estimated reach, and exploitable gaps.</p>
-        <p class="spy-header" aria-hidden="true">● LIVE SIGNAL FEED</p>
-        <div class="spy-grid">
-          <article class="spy-card">
-            <h3>Competitor A — content strategy</h3>
-            <p class="meta">EST. MONTHLY REACH · 124K · UPDATED 2H AGO</p>
-            <p>Top keywords: "workflow automation", "RevOps stack", "CRM integration". Publishing 3× weekly on blog + weekly webinar series. Gap: no vertical-specific landing pages for finance.</p>
-            <span class="tag">Exploit: Finance vertical LP</span>
-          </article>
-          <article class="spy-card">
-            <h3>Competitor B — paid &amp; organic mix</h3>
-            <p class="meta">EST. MONTHLY REACH · 89K · UPDATED 4H AGO</p>
-            <p>Heavy LinkedIn ads on "AI sales" terms. Organic weak on long-tail SEO. Gap: you can win comparison queries with unbiased buyer guides.</p>
-            <span class="tag">Exploit: Comparison content hub</span>
-          </article>
-          <article class="spy-card">
-            <h3>Competitor C — messaging angle</h3>
-            <p class="meta">EST. MONTHLY REACH · 210K · UPDATED 1H AGO</p>
-            <p>Enterprise security-first narrative. Lighter on speed-to-implement. Gap: position StratAI clients on <strong>deploy in days, not quarters</strong>.</p>
-            <span class="tag">Exploit: Speed narrative</span>
-          </article>
+        <div class="card">
+          <div class="card-title">Market Positioning Analysis</div>
+          <div class="card-content">
+            <p>Your organization is positioned as a <span class="highlight">mid-market efficiency leader</span>. Strong differentiation on ROI metrics, but weaker enterprise trust signals vs. category leaders. Recommended: Lead with customer outcomes + security/compliance proof points to shift perception upstream.</p>
+            <p style="margin-top: 1rem;">Competitor messaging over-indexes on feature parity. You own unique ground in <span class="highlight">speed-to-value</span> and <span class="highlight">outcome-driven deployment</span>.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Competitive Intelligence (Live Feed)</div>
+          <ul class="list">
+            <li><span class="highlight">Competitor A:</span> 3 new patent filings for AI automation. Content strategy shifting to enterprise security narratives.</li>
+            <li><span class="highlight">Competitor B:</span> Launched vertical-specific solutions. Monthly marketing spend +47% QoQ.</li>
+            <li><span class="highlight">Competitor C:</span> Acquired smaller vendor. Estimated market consolidation play worth $180M+.</li>
+            <li><span class="highlight">Market Alert:</span> Industry consolidation accelerating. M&A activity +210% vs prior year.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Strategic Opportunities (Exploitation)</div>
+          <ul class="list">
+            <li><span class="highlight">Vertical Penetration:</span> Launch finance-specific landing pages. Competitor gap: 6 months. ROI potential: +$840M ARR.</li>
+            <li><span class="highlight">Content Differentiation:</span> Own comparison category via unbiased buyer guides. Estimated organic traffic gain: +340%.</li>
+            <li><span class="highlight">Deployment Speed:</span> Lead with "implement in 14 days" messaging. Competitors' positioning: 8-12 weeks.</li>
+            <li><span class="highlight">Partner Ecosystem:</span> Integrate with 3 high-velocity platforms. Market expansion: +$1.2B TAM.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">90-Day Strategic Roadmap</div>
+          <div class="card-content">
+            <p><span class="highlight">Weeks 1-2:</span> Refresh core messaging + develop vertical targeting. Build 3 industry-specific landing pages.</p>
+            <p><span class="highlight">Weeks 3-6:</span> Launch content offensive. 8 comparison pieces + 5 case studies. LinkedIn thought leadership campaign.</p>
+            <p><span class="highlight">Weeks 7-9:</span> Paid advertising surge. Target competitor brand keywords + high-intent verticals. Estimated CAC: -22% vs baseline.</p>
+            <p><span class="highlight">Week 10-12:</span> Measure and optimize. Evaluate messaging resonance. Scale winners. ROI forecast: +$2.1B revenue impact by Q4.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="button">Export Full Report</button>
+          <button class="button secondary">Request Agent Briefing</button>
         </div>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap">
-        <h2>Your 2-Month Growth Projection</h2>
-        <p class="intro">Where you can reach with optimal effort across research-backed channels.</p>
-        <div class="projection">
-          <div class="proj-stat"><span class="val">+38%</span><span class="lbl">Organic traffic</span></div>
-          <div class="proj-stat"><span class="val">2.4×</span><span class="lbl">Qualified leads</span></div>
-          <div class="proj-stat"><span class="val">-22%</span><span class="lbl">CAC vs. today</span></div>
-          <div class="proj-stat"><span class="val">#3</span><span class="lbl">Category rank (est.)</span></div>
-        </div>
-        <article class="insight-card" style="margin-top:1.5rem">
-          <h3>Optimal effort plan</h3>
-          <p>Weeks 1–2: positioning refresh + 3 comparison pages. Weeks 3–6: LinkedIn thought leadership + email nurture. Weeks 7–8: paid retargeting on high-intent keywords identified in competitor gaps.</p>
-        </article>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <p>Powered by Google Gemini</p>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="research.html">Research</a>
-        <a href="strategy.html">Strategy</a>
-        <a href="content.html">Content</a>
-        <a href="analytics.html">Analytics</a>
-      </nav>
-    </footer>
+    </div>
   </body>
 </html>

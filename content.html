@@ -3,121 +3,257 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="StratAI Content — AI-generated marketing copy and creative." />
-    <title>Content — StratAI</title>
+    <meta name="description" content="StratAI Content Agent — AI-Generated Marketing Materials" />
+    <title>Content Agent — StratAI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --bg: #050911;
-        --bg2: #080d17;
-        --bg3: #0d1525;
-        --card: #0a1020;
-        --navy: #1A2B4B;
-        --indigo: #4F46E5;
-        --cyan: #00D1FF;
-        --gold: #FFD700;
-        --text: #E8EDF5;
-        --muted: #6B7A99;
-        --border: rgba(255,255,255,0.06);
-        --radius: 12px;
+        --bg-primary: #0f0f12;
+        --bg-secondary: #1a1a1f;
+        --bg-tertiary: #252530;
+        --bg-panel: #13131a;
+        --border: rgba(255,255,255,0.08);
+        --border-accent: rgba(106,168,255,0.15);
+        --text-primary: #e8eaed;
+        --text-secondary: #999ba3;
+        --text-muted: #6d7080;
+        --accent: #6aa8ff;
+        --accent-alt: #00d4ff;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --critical: #e74c3c;
       }
-      *,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
-      .nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,2.5rem);height:4rem;background:var(--navy);position:sticky;top:0;z-index:50}
-      .logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.15rem;color:#fff}
-      .nav-links{display:flex;gap:.25rem;flex-wrap:wrap}.nav-links a{padding:.5rem .85rem;font-size:.875rem;color:rgba(255,255,255,.75);border-radius:8px}.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-links a[aria-current=page]{color:#fff;background:rgba(79,70,229,.35)}
-      .nav-cta{padding:.5rem 1.15rem;font-size:.875rem;font-weight:500;color:#fff;background:var(--indigo);border-radius:8px}
-      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--bg);position:relative}.page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
-      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300;color:var(--text)}.page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);line-height:1.6}
-      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}.section--alt{background:var(--bg2)}.wrap{max-width:960px;margin:0 auto}
-      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--text)}.section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
-      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--text)}input,select,textarea{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text)}
-      .form-grid{display:flex;flex-direction:column;gap:1rem}.checks{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem}.checks label{display:flex;align-items:center;gap:.4rem;font-weight:400;margin:0;color:var(--text)}
-      .btn-primary{display:inline-block;margin-top:.5rem;padding:.85rem 1.75rem;font-size:.9375rem;font-weight:500;color:#fff;background:var(--indigo);border:none;border-radius:var(--radius);cursor:pointer}
-      .output-block{padding:1.25rem 1.5rem;background:var(--card);border-radius:var(--radius);margin-bottom:1rem;border-left:4px solid var(--indigo);border:1px solid var(--border);border-left:4px solid var(--indigo)}
-      .output-block h3{margin:0 0 .5rem;font-size:.95rem;font-weight:600;color:var(--text)}.output-block p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.6;white-space:pre-line}
-      .footer{background:var(--navy);padding:2.5rem clamp(1.25rem,4vw,2.5rem);text-align:center}.footer p{margin:0 0 1rem;font-size:.875rem;color:rgba(255,255,255,.65)}.footer-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center}.footer-nav a{font-size:.875rem;color:rgba(255,255,255,.8)}.footer-nav a:hover{color:var(--gold)}
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .header {
+        margin-bottom: 2rem;
+      }
+      .nav-breadcrumb {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .nav-breadcrumb a {
+        color: var(--accent);
+      }
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .subheader {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .grid { display: grid; gap: 1.5rem; }
+      .card {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.5rem;
+        transition: all 0.2s;
+      }
+      .card:hover {
+        border-color: var(--border-accent);
+        box-shadow: 0 0 16px rgba(106,168,255,0.1);
+      }
+      .card-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .card-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        white-space: pre-line;
+      }
+      .content-block {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 4px;
+        padding: 1rem;
+        margin-top: 1rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.85rem;
+      }
+      .content-headline {
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .button {
+        padding: 0.6rem 1.25rem;
+        background: var(--accent);
+        color: var(--bg-primary);
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
+      }
+      .button:hover {
+        background: var(--accent-alt);
+        box-shadow: 0 0 16px rgba(0,212,255,0.3);
+      }
+      .button.secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--border-accent);
+      }
+      .button.secondary:hover {
+        background: rgba(106,168,255,0.1);
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(106,168,255,0.2);
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
-    <header class="nav">
-      <a class="logo" href="index.html">StratAI</a>
-      <nav class="nav-links" aria-label="Agents">
-        <a href="research.html">Research</a>
-        <a href="strategy.html">Strategy</a>
-        <a href="content.html" aria-current="page">Content</a>
-        <a href="analytics.html">Analytics</a>
-      </nav>
-      <a class="nav-cta" href="research.html">Get Started</a>
-    </header>
-    <section class="page-hero">
-      <h1>Content Agent</h1>
-      <p>Generate on-brand ad copy, emails, social posts, and blog outlines from your campaign theme.</p>
-    </section>
-    <section class="section section--alt">
-      <div class="wrap">
-        <h2>Content brief</h2>
-        <p class="intro">Set tone, channels, and theme. Gemini produces channel-ready drafts for review.</p>
-        <form class="form-grid" action="#" method="get">
-          <div><label for="tone">Brand tone</label><select id="tone" name="tone" required><option value="">Select tone</option><option>Professional &amp; authoritative</option><option>Friendly &amp; conversational</option><option>Bold &amp; disruptive</option><option>Technical &amp; precise</option></select></div>
-          <fieldset class="checks" style="border:none;padding:0;margin:0">
-            <legend style="font-size:.8125rem;font-weight:500;margin-bottom:.5rem;color:var(--text)">Channels</legend>
-            <label><input type="checkbox" name="ch" value="ads" checked /> Paid ads</label>
-            <label><input type="checkbox" name="ch" value="email" checked /> Email</label>
-            <label><input type="checkbox" name="ch" value="social" checked /> Social</label>
-            <label><input type="checkbox" name="ch" value="blog" /> Blog</label>
-          </fieldset>
-          <div><label for="theme">Campaign theme</label><textarea id="theme" name="theme" placeholder="e.g. Q2 launch — AI marketing team for enterprise PMMs" required></textarea></div>
-          <button type="submit" class="btn-primary">Generate content</button>
-        </form>
+    <div class="container">
+      <div class="header">
+        <div class="nav-breadcrumb"><a href="index.html">← Back to Command Center</a></div>
+        <h1>Content Agent</h1>
+        <p class="subheader">On-brand marketing copy generated across all channels. Optimized for conversion and strategic alignment.</p>
       </div>
-    </section>
-    <section class="section">
-      <div class="wrap">
-        <h2>Generated content</h2>
-        <p class="intro">Sample outputs aligned to your brief and strategy.</p>
-        <article class="output-block">
-          <h3>Ad copy (LinkedIn)</h3>
-          <p>Headline: Your marketing team, fully automated.
-Body: Research. Strategy. Content. Analytics. Four Gemini agents. One prompt. See how StratAI bridges capability and outcomes.
-CTA: Get started →</p>
-        </article>
-        <article class="output-block">
-          <h3>Email — nurture #1</h3>
-          <p>Subject: The gap between AI hype and pipeline impact
 
-Hi {{first_name}},
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Content Configuration</div>
+          <div class="card-content">
+Brand Tone: Professional &amp; Authoritative
+Primary Channels: LinkedIn, Email, Paid Ads, Blog
+Campaign Theme: Enterprise AI for strategic decision-making
+Target Persona: VP Marketing, mid-market SaaS
+Message Focus: Outcome-driven, risk mitigation, speed</div>
+        </div>
 
-Most teams have AI tools. Few have AI outcomes. StratAI connects research through analytics in one governed pipeline — so your next campaign ships with proof, not guesswork.
+        <div class="card">
+          <div class="card-title">LinkedIn Advertising Copy</div>
+          <div class="content-block">
+            <div class="content-headline">Headline:</div>
+            Your marketing strategy, now autonomous.
+            <div style="margin-top: 0.75rem;">
+              <div class="content-headline">Body:</div>
+              Four AI agents. One command center. StratAI orchestrates research, strategy, content, and analytics end-to-end—so your campaigns ship in days, not quarters. Enterprise-grade governance. Real-time risk detection. Strategic decision support for CMOs who demand precision.
+              <div style="margin-top: 0.5rem;"><span style="color: var(--success); font-weight: 600;">CTA: Schedule Briefing →</span></div>
+            </div>
+          </div>
+        </div>
 
-[Book a walkthrough]</p>
-        </article>
-        <article class="output-block">
-          <h3>Social — LinkedIn post</h3>
-          <p>One prompt. Four agents. Full-funnel marketing automation.
+        <div class="card">
+          <div class="card-title">Email Sequence #1 (Awareness)</div>
+          <div class="content-block">
+            <div class="content-headline">Subject Line:</div>
+            The gap between AI hype and marketing reality
+            <div style="margin-top: 0.75rem;">
+              <div class="content-headline">Opening:</div>
+              Hi {{first_name}},
 
-We built StratAI for teams tired of stitching ChatGPT threads into a strategy. Research → Strategy → Content → Analytics — powered by Google Gemini.
+Most marketing teams have ChatGPT licenses. Few have AI-driven outcomes.
+              <div style="margin-top: 0.75rem;">
+              <div class="content-headline">Body:</div>
+              StratAI isn't a chat tool. It's a strategic intelligence platform that coordinates AI agents across research, planning, content creation, and analytics.
 
-Who's optimizing their stack this quarter? 👇</p>
-        </article>
-        <article class="output-block">
-          <h3>Blog outline</h3>
-          <p>Title: How to Close the AI Marketing Execution Gap
-1. Why single-tool AI fails at scale
-2. The four-agent pipeline model
-3. Research &amp; intelligence first
-4. Strategy and content handoffs
-5. Measuring what matters
-6. Getting started with StratAI</p>
-        </article>
+One command. Full-funnel campaign execution.
+
+              <div style="margin-top: 0.75rem;">
+              <div class="content-headline">CTA:</div>
+              See how it works →
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Blog Outline</div>
+          <div class="card-content">
+Title: How Enterprise Teams Close the AI Execution Gap
+
+1. The CEO/CMO Challenge: AI Promises vs. Reality
+   - 67% of marketing teams invested in AI tools
+   - Only 18% report measurable revenue impact
+   - Why: disconnected point solutions, no governance framework
+
+2. Traditional Stack Problems
+   - Agents don't talk to each other
+   - Research → strategy handoffs cause delays
+   - No unified decision framework
+   - Risk management is reactive
+
+3. The Four-Agent Pipeline Model
+   - Research Agent: Market intelligence
+   - Strategy Agent: Campaign planning
+   - Content Agent: Asset generation
+   - Analytics Agent: Performance forecasting
+
+4. Real Enterprise Case Study
+   - Pre: 6-week campaign cycles
+   - Post: 2-day deployment with StratAI
+   - ROI: 3.2x faster lead generation
+   - Risk reduction: 89% fewer strategic surprises
+
+5. Implementation & Governance
+   - Integration with existing MarTech stack
+   - Role-based access and approvals
+   - Audit trail and compliance
+   - Real-time performance monitoring
+
+6. Getting Started
+   - 30-minute guided setup
+   - Pre-trained models for your industry
+   - Dedicated agent oversight
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Social Media Posts</div>
+          <div class="card-content">
+Post 1:
+"One prompt. Four agents. Full-funnel execution. StratAI doesn't chat—it orchestrates. Research → Strategy → Content → Analytics, coordinated in real-time. Enterprise teams are shipping campaigns 10x faster. How's your current stack performing? 👇"
+
+Post 2:
+"The CMO's dilemma: Your org invests in 'AI' but gets ChatGPT. StratAI is what enterprise executives actually need—strategic decision support with risk detection and outcome forecasting built in. Not hype. Governance."
+
+Post 3:
+"Your marketing strategy is a data coordination problem. We solved it. Four specialized agents + one command center. Research, strategy, content, analytics—coordinated without human handoffs. Result: 340 leads in 12 weeks. What's possible for your team?"
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="button">Export All Assets</button>
+          <button class="button secondary">Generate Variations</button>
+        </div>
       </div>
-    </section>
-    <footer class="footer">
-      <p>Powered by Google Gemini</p>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="research.html">Research</a><a href="strategy.html">Strategy</a><a href="content.html">Content</a><a href="analytics.html">Analytics</a>
-      </nav>
-    </footer>
+    </div>
   </body>
 </html>

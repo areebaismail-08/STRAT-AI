@@ -3,108 +3,262 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="StratAI Analytics — KPI analysis, recommendations, and forecasts." />
-    <title>Analytics — StratAI</title>
+    <meta name="description" content="StratAI Analytics Agent — KPI Analysis &amp; Performance Forecasting" />
+    <title>Analytics Agent — StratAI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --bg: #050911;
-        --bg2: #080d17;
-        --bg3: #0d1525;
-        --card: #0a1020;
-        --navy: #1A2B4B;
-        --indigo: #4F46E5;
-        --cyan: #00D1FF;
-        --gold: #FFD700;
-        --text: #E8EDF5;
-        --muted: #6B7A99;
-        --border: rgba(255,255,255,0.06);
-        --radius: 12px;
+        --bg-primary: #0f0f12;
+        --bg-secondary: #1a1a1f;
+        --bg-tertiary: #252530;
+        --bg-panel: #13131a;
+        --border: rgba(255,255,255,0.08);
+        --border-accent: rgba(106,168,255,0.15);
+        --text-primary: #e8eaed;
+        --text-secondary: #999ba3;
+        --text-muted: #6d7080;
+        --accent: #6aa8ff;
+        --accent-alt: #00d4ff;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --critical: #e74c3c;
       }
-      *,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
-      .nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,2.5rem);height:4rem;background:var(--navy);position:sticky;top:0;z-index:50}
-      .logo{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.15rem;color:#fff}
-      .nav-links{display:flex;gap:.25rem;flex-wrap:wrap}.nav-links a{padding:.5rem .85rem;font-size:.875rem;color:rgba(255,255,255,.75);border-radius:8px}.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-links a[aria-current=page]{color:#fff;background:rgba(79,70,229,.35)}
-      .nav-cta{padding:.5rem 1.15rem;font-size:.875rem;font-weight:500;color:#fff;background:var(--indigo);border-radius:8px}
-      .page-hero{padding:3rem clamp(1.25rem,4vw,2.5rem) 2.5rem;text-align:center;background:var(--bg);position:relative}.page-hero::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:min(80vw,600px);height:280px;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(79,70,229,.1),transparent 70%);pointer-events:none}
-      .page-hero h1{position:relative;margin:0 0 .75rem;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:300;color:var(--text)}.page-hero p{position:relative;margin:0 auto;max-width:36rem;color:var(--muted);line-height:1.6}
-      .section{padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)}.section--alt{background:var(--bg2)}.wrap{max-width:960px;margin:0 auto}
-      .section h2{margin:0 0 .5rem;font-size:1.35rem;font-weight:600;color:var(--text)}.section .intro{margin:0 0 1.75rem;color:var(--muted);font-size:.9375rem;line-height:1.6}
-      label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.35rem;color:var(--text)}input{width:100%;padding:.75rem 1rem;font-family:inherit;font-size:.9375rem;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text)}
-      .metrics{display:flex;flex-wrap:wrap;gap:1rem}.metrics>div{flex:1 1 200px}
-      .btn-primary{display:inline-block;margin-top:.5rem;padding:.85rem 1.75rem;font-size:.9375rem;font-weight:500;color:#fff;background:var(--indigo);border:none;border-radius:var(--radius);cursor:pointer}
-      .kpi-row{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
-      .kpi{flex:1 1 140px;padding:1.25rem;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);text-align:center}
-      .kpi .val{display:block;font-size:1.5rem;font-weight:600;color:var(--indigo)}.kpi .lbl{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-      .rec-card{padding:1.25rem 1.5rem;background:var(--card);border-radius:var(--radius);margin-bottom:1rem;border-left:4px solid var(--gold);border:1px solid var(--border);border-left:4px solid var(--gold)}
-      .rec-card h3{margin:0 0 .5rem;font-size:1rem;font-weight:600;color:var(--text)}.rec-card p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.55}
-      .forecast{padding:1.5rem;background:var(--bg3);color:var(--text);border-radius:var(--radius);border:1px solid var(--border)}
-      .forecast h3{margin:0 0 1rem;font-size:1rem;font-weight:600;color:var(--gold)}.forecast p{margin:0;font-size:.9rem;line-height:1.65;color:var(--muted)}
-      .footer{background:var(--navy);padding:2.5rem clamp(1.25rem,4vw,2.5rem);text-align:center}.footer p{margin:0 0 1rem;font-size:.875rem;color:rgba(255,255,255,.65)}.footer-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center}.footer-nav a{font-size:.875rem;color:rgba(255,255,255,.8)}.footer-nav a:hover{color:var(--gold)}
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .header {
+        margin-bottom: 2rem;
+      }
+      .nav-breadcrumb {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .nav-breadcrumb a {
+        color: var(--accent);
+      }
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .subheader {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .grid { display: grid; gap: 1.5rem; }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      .stat {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.25rem;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .stat-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 0.25rem;
+      }
+      .stat-note {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+      .card {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.5rem;
+        transition: all 0.2s;
+      }
+      .card:hover {
+        border-color: var(--border-accent);
+        box-shadow: 0 0 16px rgba(106,168,255,0.1);
+      }
+      .card-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .card-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+      }
+      .rec {
+        background: var(--bg-tertiary);
+        border-left: 3px solid var(--accent);
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+      }
+      .rec-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.4rem;
+      }
+      .rec-desc {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      .forecast-box {
+        background: linear-gradient(135deg, rgba(106,168,255,0.1), rgba(0,212,255,0.05));
+        border: 1px solid var(--border-accent);
+        border-radius: 6px;
+        padding: 1.5rem;
+        margin-top: 1rem;
+      }
+      .forecast-title {
+        color: var(--accent-alt);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+      .button {
+        padding: 0.6rem 1.25rem;
+        background: var(--accent);
+        color: var(--bg-primary);
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
+      }
+      .button:hover {
+        background: var(--accent-alt);
+        box-shadow: 0 0 16px rgba(0,212,255,0.3);
+      }
+      .button.secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--border-accent);
+      }
+      .button.secondary:hover {
+        background: rgba(106,168,255,0.1);
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(106,168,255,0.2);
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
-    <header class="nav">
-      <a class="logo" href="index.html">StratAI</a>
-      <nav class="nav-links" aria-label="Agents">
-        <a href="research.html">Research</a>
-        <a href="strategy.html">Strategy</a>
-        <a href="content.html">Content</a>
-        <a href="analytics.html" aria-current="page">Analytics</a>
-      </nav>
-      <a class="nav-cta" href="research.html">Get Started</a>
-    </header>
-    <section class="page-hero">
-      <h1>Analytics Agent</h1>
-      <p>KPI analysis, actionable recommendations, and performance forecasts from your current metrics.</p>
-    </section>
-    <section class="section section--alt">
-      <div class="wrap">
-        <h2>Current metrics</h2>
-        <p class="intro">Enter your baseline. The analytics agent models impact and next-best actions.</p>
-        <form class="metrics" action="#" method="get">
-          <div><label for="traffic">Monthly traffic</label><input id="traffic" name="traffic" type="number" placeholder="e.g. 24000" /></div>
-          <div><label for="conv">Conversion rate (%)</label><input id="conv" name="conv" type="number" step="0.1" placeholder="e.g. 2.4" /></div>
-          <div><label for="spend">Monthly ad spend ($)</label><input id="spend" name="spend" type="number" placeholder="e.g. 12000" /></div>
-          <div style="flex:1 1 100%"><button type="submit" class="btn-primary">Analyze performance</button></div>
-        </form>
+    <div class="container">
+      <div class="header">
+        <div class="nav-breadcrumb"><a href="index.html">← Back to Command Center</a></div>
+        <h1>Analytics Agent</h1>
+        <p class="subheader">Real-time KPI analysis, strategic recommendations, and 90-day performance forecasting with confidence intervals.</p>
       </div>
-    </section>
-    <section class="section">
-      <div class="wrap">
-        <h2>KPI analysis</h2>
-        <p class="intro">Snapshot based on your inputs vs. category benchmarks.</p>
-        <div class="kpi-row">
-          <div class="kpi"><span class="val">2.4%</span><span class="lbl">Conv. rate</span></div>
-          <div class="kpi"><span class="val">$42</span><span class="lbl">CAC</span></div>
-          <div class="kpi"><span class="val">$168</span><span class="lbl">CPL</span></div>
-          <div class="kpi"><span class="val">3.2x</span><span class="lbl">ROAS</span></div>
+
+      <div class="grid">
+        <div>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-label">Current Conv. Rate</div>
+              <div class="stat-value">2.4%</div>
+              <div class="stat-note">vs 1.8% industry avg</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">CAC</div>
+              <div class="stat-value">$842</div>
+              <div class="stat-note">↓ $158 vs Q1</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">LTV/CAC Ratio</div>
+              <div class="stat-value">4.2x</div>
+              <div class="stat-note">Healthy threshold: 3.0x+</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Marketing ROI</div>
+              <div class="stat-value">3.1x</div>
+              <div class="stat-note">↑ 0.4x vs prior quarter</div>
+            </div>
+          </div>
         </div>
-        <article class="rec-card">
-          <h3>Recommendation: Fix landing page friction</h3>
-          <p>Exit surveys suggest 34% drop-off on mobile form fields. A/B test single-field lead capture — projected +0.6% conversion lift.</p>
-        </article>
-        <article class="rec-card">
-          <h3>Recommendation: Reallocate paid spend</h3>
-          <p>LinkedIn outperforms search by 2.1× on CPL. Shift 20% of search budget to retargeting high-intent visitors from research content.</p>
-        </article>
-        <article class="rec-card">
-          <h3>Recommendation: Content velocity</h3>
-          <p>Organic traffic correlates with publishing frequency. Increase from 2 to 4 posts/month — forecast +18% traffic in 60 days.</p>
-        </article>
-        <div class="forecast">
-          <h3>90-day forecast</h3>
-          <p>With recommended optimizations: traffic +24–31%, conversions +35–42%, CAC down 12–18%. Confidence interval 78% based on comparable B2B SaaS cohorts. Run StratAI content + strategy agents to accelerate top-of-funnel.</p>
+
+        <div class="card">
+          <div class="card-title">Actionable Recommendations</div>
+          <div class="card-content">
+            <div class="rec">
+              <div class="rec-title">1. Optimize Mobile Form Experience</div>
+              <div class="rec-desc">Exit survey data: 34% drop-off on mobile form fields. A/B test single-field capture model. Estimated conversion lift: +0.6% (adds $2.1M annual revenue).</div>
+            </div>
+            <div class="rec">
+              <div class="rec-title">2. Reallocate Paid Budget to LinkedIn</div>
+              <div class="rec-desc">LinkedIn performance: 2.1x superior CPL vs paid search. Recommend shifting $28K/month from SEM to LinkedIn retargeting. Projected pipeline impact: +$1.4B Q3.</div>
+            </div>
+            <div class="rec">
+              <div class="rec-title">3. Accelerate Content Publishing</div>
+              <div class="rec-desc">Organic traffic shows strong correlation with publishing frequency. Increase from 2 to 4 posts/month. Forecast: +18% traffic, +340 monthly leads within 60 days.</div>
+            </div>
+            <div class="rec">
+              <div class="rec-title">4. Expand High-Intent Keyword Coverage</div>
+              <div class="rec-desc">3 comparison-intent keywords (market size: 8.2K/month) currently uncontested. Build comparison content hub. Confidence: 89%. Potential: $4.1M+ ARR.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">90-Day Strategic Forecast</div>
+          <div class="forecast-box">
+            <div class="forecast-title">With Recommended Optimizations</div>
+            <p style="margin: 0.75rem 0; font-size: 0.95rem;"><span style="color: var(--success); font-weight: 600;">→ Organic Traffic:</span> +24–31% (confidence 84%)</p>
+            <p style="margin: 0.75rem 0; font-size: 0.95rem;"><span style="color: var(--success); font-weight: 600;">→ Leads Generated:</span> +35–42% (confidence 87%)</p>
+            <p style="margin: 0.75rem 0; font-size: 0.95rem;"><span style="color: var(--success); font-weight: 600;">→ CAC Reduction:</span> 12–18% improvement (confidence 81%)</p>
+            <p style="margin: 0.75rem 0; font-size: 0.95rem;"><span style="color: var(--success); font-weight: 600;">→ Pipeline Impact:</span> $8.2M+ additional ARR (confidence 78%)</p>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">Confidence intervals based on 18 months comparable B2B SaaS cohort analysis. Risk factors: market volatility, competitive response, execution speed.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Cohort &amp; Attribution Analysis</div>
+          <div class="card-content">
+            <p><span style="color: var(--accent); font-weight: 600;">Best Performing Channel:</span> Organic/Content (ROI 4.2x). Consistency: High. Scalability: 340+ new leads per 1 new content asset.</p>
+            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Second Best:</span> LinkedIn (ROI 3.8x). Growth: Rapid. Note: First-touch attribution undervalues LinkedIn's role in lower-funnel conversions.</p>
+            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Emerging Opportunity:</span> Email nurture (ROI 2.1x today). Segmentation improvements could raise to 3.1x. High-volume potential.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="button">Export Full Analytics Report</button>
+          <button class="button secondary">Schedule Forecast Review</button>
         </div>
       </div>
-    </section>
-    <footer class="footer">
-      <p>Powered by Google Gemini</p>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="research.html">Research</a><a href="strategy.html">Strategy</a><a href="content.html">Content</a><a href="analytics.html">Analytics</a>
-      </nav>
-    </footer>
+    </div>
   </body>
 </html>
