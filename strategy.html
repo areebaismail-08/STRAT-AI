@@ -1,263 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="StratAI Strategy Agent — Campaign Planning &amp; Messaging" />
-    <title>Strategy Agent — StratAI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --bg-primary: #0f0f12;
-        --bg-secondary: #1a1a1f;
-        --bg-tertiary: #252530;
-        --bg-panel: #13131a;
-        --border: rgba(255,255,255,0.08);
-        --border-accent: rgba(106,168,255,0.15);
-        --text-primary: #e8eaed;
-        --text-secondary: #999ba3;
-        --text-muted: #6d7080;
-        --accent: #6aa8ff;
-        --accent-alt: #00d4ff;
-        --success: #2ecc71;
-        --warning: #f39c12;
-        --critical: #e74c3c;
-      }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
-      body {
-        font-family: 'Inter', system-ui, sans-serif;
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        -webkit-font-smoothing: antialiased;
-      }
-      a { color: inherit; text-decoration: none; }
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem;
-      }
-      .header {
-        margin-bottom: 2rem;
-      }
-      .nav-breadcrumb {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-      }
-      .nav-breadcrumb a {
-        color: var(--accent);
-      }
-      h1 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin: 0 0 0.5rem;
-        letter-spacing: -0.02em;
-      }
-      .subheader {
-        color: var(--text-secondary);
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-      }
-      .grid { display: grid; gap: 1.5rem; }
-      .card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.5rem;
-        transition: all 0.2s;
-      }
-      .card:hover {
-        border-color: var(--border-accent);
-        box-shadow: 0 0 16px rgba(106,168,255,0.1);
-      }
-      .card-title {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-      }
-      .card-content {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: var(--text-secondary);
-      }
-      .channel-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-      .channel-item {
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 1rem;
-      }
-      .channel-name {
-        font-weight: 600;
-        color: var(--accent);
-        margin-bottom: 0.5rem;
-      }
-      .channel-details {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-      }
-      .timeline {
-        margin-top: 1rem;
-      }
-      .timeline-item {
-        padding: 0.75rem 0;
-        border-left: 2px solid var(--border);
-        padding-left: 1rem;
-        margin-left: 0;
-        position: relative;
-      }
-      .timeline-item::before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
-        position: absolute;
-        left: -5px;
-        top: 0.5rem;
-      }
-      .timeline-item-title {
-        font-weight: 600;
-        color: var(--text-primary);
-        font-size: 0.9rem;
-      }
-      .timeline-item-desc {
-        color: var(--text-secondary);
-        font-size: 0.85rem;
-      }
-      .button {
-        padding: 0.6rem 1.25rem;
-        background: var(--accent);
-        color: var(--bg-primary);
-        border: none;
-        border-radius: 4px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-family: 'Inter', sans-serif;
-      }
-      .button:hover {
-        background: var(--accent-alt);
-        box-shadow: 0 0 16px rgba(0,212,255,0.3);
-      }
-      .button.secondary {
-        background: transparent;
-        color: var(--accent);
-        border: 1px solid var(--border-accent);
-      }
-      .button.secondary:hover {
-        background: rgba(106,168,255,0.1);
-      }
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: var(--bg-primary);
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgba(106,168,255,0.2);
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <div class="nav-breadcrumb"><a href="index.html">← Back to Command Center</a></div>
-        <h1>Strategy Agent</h1>
-        <p class="subheader">AI-generated campaign strategy with channel mix, messaging pillars, and phased execution timeline.</p>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="StratAI — AI-Powered Marketing Strategy. Campaign planning, channel mix, positioning, and go-to-market timelines."/>
+<title>StratAI — Strategy Agent | AI Marketing Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --white: #ffffff;
+  --alt: #f4f7fa;
+  --navy: #1a2b4b;
+  --indigo: #4f46e5;
+  --indigo-glow: #6366f1;
+  --purple-glow: #8b5cf6;
+  --gold: #ffd700;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --radius: 16px;
+  --radius-sm: 12px;
+
+  /* dark cinematic palette */
+  --bg-base: #05060a;
+  --bg-surface: #0a0c14;
+  --bg-card: rgba(15, 18, 28, 0.7);
+  --card-border: rgba(99, 102, 241, 0.2);
+  --card-border-hover: rgba(139, 92, 246, 0.5);
+  --glow-indigo: rgba(79, 70, 229, 0.25);
+  --text-primary: #f0f3fa;
+  --text-secondary: #9ca3cf;
+  --nav-bg: rgba(5, 6, 10, 0.85);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* cinematic grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* scanline effect */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ===== NAVIGATION ===== */
+.skip { position: absolute; left: -9999px; top: 0; padding: 0.75rem 1rem; background: var(--indigo); color: #fff; z-index: 100; border-radius: 0 0 8px 0; }
+.skip:focus { left: 1rem; top: 1rem; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  height: 4rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+.nav::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--indigo-glow) 25%, var(--purple-glow) 70%, transparent 100%);
+  opacity: 0.5;
+}
+
+.logo {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, #fff 30%, #a78bfa 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nav-links { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.nav-links a {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 40px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: #fff; background: rgba(99, 102, 241, 0.2); }
+.nav-links a.active {
+  color: #fff;
+  background: rgba(139, 92, 246, 0.25);
+  border: 0.5px solid rgba(139,92,246,0.4);
+}
+
+.nav-cta {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(115deg, #4f46e5, #7c3aed);
+  border-radius: 40px;
+  box-shadow: 0 0 12px rgba(79,70,229,0.4);
+  transition: all 0.2s;
+}
+.nav-cta:hover {
+  box-shadow: 0 0 24px rgba(79,70,229,0.6);
+  transform: translateY(-1px);
+}
+
+/* ===== STRATEGY HERO ===== */
+.strategy-hero {
+  position: relative;
+  text-align: center;
+  padding: clamp(3rem, 10vw, 5rem) clamp(1.25rem, 4vw, 2rem) clamp(3rem, 8vw, 4rem);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.strategy-hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  width: min(100vw, 900px);
+  height: min(70vh, 550px);
+  background: radial-gradient(ellipse 50% 40% at 50% 50%, rgba(79,70,229,0.2) 0%, rgba(139,92,246,0.08) 45%, transparent 75%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.strategy-hero-inner {
+  position: relative;
+  max-width: 56rem;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+.strategy-hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 30%, #c7d2fe 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.strategy-badge {
+  display: inline-block;
+  background: rgba(139,92,246,0.15);
+  border: 1px solid rgba(139,92,246,0.35);
+  border-radius: 100px;
+  padding: 0.3rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #c4b5fd;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(4px);
+}
+
+.strategy-hero .sub {
+  margin: 0 auto 2rem;
+  max-width: 38rem;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ===== STRATEGY FORM CARD ===== */
+.generator-card {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  backdrop-filter: blur(18px);
+  padding: 1.8rem 2rem;
+  transition: all 0.3s;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #a78bfa;
+  font-weight: 500;
+}
+
+.form-field input, .form-field textarea, .form-field select {
+  background: rgba(10,12,20,0.8);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  transition: all 0.2s;
+}
+
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 12px rgba(139,92,246,0.2);
+}
+
+.form-field input::placeholder, .form-field textarea::placeholder {
+  color: rgba(156,163,207,0.5);
+  font-size: 0.8rem;
+}
+
+.form-row {
+  grid-column: 1 / -1;
+}
+
+.generate-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(115deg, #4f46e5, #7c3aed);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.generate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(79,70,229,0.4);
+}
+
+.generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== AI OUTPUT SECTION ===== */
+.strategy-output {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.output-card {
+  background: rgba(10,12,20,0.6);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 24px;
+  padding: 1.8rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s;
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(139,92,246,0.2);
+}
+
+.output-icon {
+  font-size: 1.5rem;
+}
+
+.output-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #c4b5fd;
+}
+
+.strategy-content {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.strategy-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.strategy-section {
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px dashed rgba(139,92,246,0.15);
+}
+
+.strategy-section:last-child {
+  border-bottom: none;
+}
+
+.strategy-section h4 {
+  color: #c4b5fd;
+  font-size: 1rem;
+  margin: 0 0 0.8rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.strategy-section p {
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem;
+}
+
+.insight-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.insight-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed rgba(99,102,241,0.1);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.insight-list li::before {
+  content: "▹";
+  color: #a78bfa;
+  font-size: 0.8rem;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  background: #a78bfa;
+  border-radius: 50%;
+  animation: pulseDot 1.2s infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== STRATEGY FRAMEWORKS SECTION ===== */
+.frameworks {
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.frameworks h2 {
+  text-align: center;
+  margin: 0 0 0.75rem;
+  font-size: 1.7rem;
+  font-weight: 600;
+  background: linear-gradient(120deg, #f0f3fa, #c7d2fe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.frameworks .lead {
+  text-align: center;
+  margin: 0 auto 2.5rem;
+  max-width: 32rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.framework-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.framework-card {
+  flex: 1 1 240px;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s;
+  text-align: center;
+}
+
+.framework-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-border-hover);
+  background: rgba(79,70,229,0.08);
+}
+
+.framework-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.framework-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.framework-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: rgba(3, 5, 10, 0.9);
+  border-top: 1px solid rgba(99,102,241,0.2);
+  padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.footer p {
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  color: rgba(160,165,190,0.5);
+}
+
+.footer-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: center; }
+.footer-nav a {
+  font-size: 0.8rem;
+  color: rgba(200,205,225,0.5);
+  transition: color 0.2s;
+}
+.footer-nav a:hover { color: #a78bfa; }
+
+/* reveal animations */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); filter: blur(3px);}
+  100% { opacity: 1; transform: translateY(0); filter: blur(0);}
+}
+
+.strategy-hero-inner, .generator-card, .frameworks h2, .frameworks .lead, .framework-card {
+  animation: fadeUp 0.7s cubic-bezier(0.2,0.9,0.4,1.1) forwards;
+  opacity: 0;
+}
+
+.strategy-hero-inner { animation-delay: 0.05s; }
+.generator-card { animation-delay: 0.2s; }
+.frameworks h2 { animation-delay: 0.4s; }
+.frameworks .lead { animation-delay: 0.5s; }
+.framework-card:nth-child(1) { animation-delay: 0.6s; }
+.framework-card:nth-child(2) { animation-delay: 0.7s; }
+.framework-card:nth-child(3) { animation-delay: 0.8s; }
+.framework-card:nth-child(4) { animation-delay: 0.9s; }
+
+@media (max-width: 768px) {
+  .nav { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; gap: 0.5rem; }
+  .nav-links { order: 3; width: 100%; justify-content: center; }
+  .generator-card { padding: 1.25rem; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a class="logo" href="index.html">StratAI</a>
+  <nav class="nav-links" aria-label="Agents">
+    <a href="research.html">Research</a>
+    <a href="strategy.html" class="active">Strategy</a>
+    <a href="content.html">Content</a>
+    <a href="analytics.html">Analytics</a>
+  </nav>
+  <a class="nav-cta" href="research.html">Get Started</a>
+</header>
+
+<main id="main">
+  <section class="strategy-hero">
+    <div class="strategy-hero-inner">
+      <div class="strategy-badge">⚡ AI Strategy Agent — Powered by Gemini</div>
+      <h1>Strategic intelligence that moves markets.</h1>
+      <p class="sub">Go beyond tactics. Get full campaign blueprints, channel mix optimization, positioning frameworks, and launch timelines — all generated by AI.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="generator-card">
+      <div class="generator-label">🧠 Business Context & Strategy Inputs</div>
+      
+      <div class="form-grid">
+        <div class="form-field">
+          <label>🔖 Brand Name</label>
+          <input type="text" id="brandName" placeholder="Your brand or company name">
+        </div>
+        
+        <div class="form-field">
+          <label>📦 Product/Service</label>
+          <input type="text" id="product" placeholder="What do you sell?">
+        </div>
+        
+        <div class="form-field">
+          <label>🎨 Brand Vibe/Taste</label>
+          <input type="text" id="brandVibe" placeholder="e.g., minimalist, bold, elegant, playful">
+        </div>
+        
+        <div class="form-field">
+          <label>👥 Target Audience</label>
+          <input type="text" id="audience" placeholder="Who are your ideal customers?">
+        </div>
+        
+        <div class="form-field">
+          <label>💔 Emotional Trigger/Problem Solved</label>
+          <input type="text" id="emotionalTrigger" placeholder="What pain or desire do you address?">
+        </div>
+        
+        <div class="form-field">
+          <label>📢 Recent Marketing Tactics</label>
+          <input type="text" id="recentTactics" placeholder="What have you tried recently?">
+        </div>
+        
+        <div class="form-field">
+          <label>✍️ Content Style/Taste</label>
+          <input type="text" id="contentStyle" placeholder="e.g., data-driven, storytelling, humorous">
+        </div>
+        
+        <div class="form-field">
+          <label>📱 Marketing Platform</label>
+          <input type="text" id="platform" placeholder="Instagram, LinkedIn, TikTok, Email, etc.">
+        </div>
+        
+        <div class="form-field">
+          <label>💰 Current Revenue/Business Stage</label>
+          <input type="text" id="businessStage" placeholder="Startup, growth, established, pre-revenue">
+        </div>
+        
+        <div class="form-field">
+          <label>🎯 Expected Results/Revenue Goal</label>
+          <input type="text" id="expectedResults" placeholder="What are you aiming for?">
+        </div>
+        
+        <div class="form-field">
+          <label>💵 Budget (monthly)</label>
+          <input type="text" id="budget" placeholder="$0, $5k, $20k, or 'very limited'">
+        </div>
+        
+        <div class="form-field">
+          <label>⏱️ Timeline</label>
+          <input type="text" id="timeline" placeholder="30 days, 3 months, 6 months">
+        </div>
+        
+        <div class="form-field">
+          <label>👨‍💻 Available Resources/Team</label>
+          <input type="text" id="resources" placeholder="e.g., just me, 2 freelancers, full team">
+        </div>
+        
+        <div class="form-field">
+          <label>🔗 Social Media/Website Link (optional)</label>
+          <input type="text" id="socialLinks" placeholder="https://instagram.com/yourbrand">
+        </div>
       </div>
+      
+      <button class="generate-btn" id="generateStrategyBtn">✨ Generate Strategic Blueprint</button>
+    </div>
 
-      <div class="grid">
-        <div class="card">
-          <div class="card-title">Campaign Parameters</div>
-          <div class="card-content">
-            <p><span style="color: var(--accent); font-weight: 600;">Goal:</span> Generate 340 qualified leads and establish category thought leadership in Q2.</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Target:</span> VP of Marketing & CMOs at mid-market SaaS (50-500 employees).</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Budget:</span> $285K quarterly investment. Expected ROI: 3.8x.</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Timeline:</span> 12-week sprint with weekly optimization reviews.</p>
-          </div>
+    <div class="strategy-output" id="strategyOutput">
+      <div class="output-card" id="outputContainer">
+        <div class="output-header">
+          <span class="output-icon">📋</span>
+          <h3>AI-Generated Strategic Blueprint</h3>
         </div>
-
-        <div class="card">
-          <div class="card-title">Channel Mix &amp; Allocation</div>
-          <div class="channel-grid">
-            <div class="channel-item">
-              <div class="channel-name">LinkedIn</div>
-              <div class="channel-details">35% budget • Thought leadership • Retargeting</div>
-            </div>
-            <div class="channel-item">
-              <div class="channel-name">Email</div>
-              <div class="channel-details">25% budget • 5-touch nurture • Segmented</div>
-            </div>
-            <div class="channel-item">
-              <div class="channel-name">SEO/Content</div>
-              <div class="channel-details">25% budget • 3 pillar pages • Comparison hub</div>
-            </div>
-            <div class="channel-item">
-              <div class="channel-name">Paid Search</div>
-              <div class="channel-details">15% budget • High-intent keywords • Branded</div>
-            </div>
+        <div id="strategyContent" class="strategy-content">
+          <div class="loading-dots" style="display: none;" id="loadingDots">
+            <span></span><span></span><span></span>
           </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Messaging Pillars</div>
-          <div class="card-content">
-            <p><span style="color: var(--accent); font-weight: 600;">Pillar 1 — Outcome-First:</span> "Ship AI-powered campaigns in days, not quarters."</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Pillar 2 — Proof:</span> Customer metrics, analyst recognition, case studies demonstrating 2-4x lead velocity improvement.</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--accent); font-weight: 600;">Pillar 3 — Differentiation:</span> Four-agent pipeline vs. single-tool AI. Governance-first architecture. Enterprise-ready.</p>
+          <div id="strategyText">
+            <p style="color: #6b7280; text-align: center; padding: 2rem;">Complete the form above and generate a custom strategic plan.</p>
           </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Phased Execution Timeline</div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-item-title">Weeks 1-2: Foundation</div>
-              <div class="timeline-item-desc">Lock messaging, refresh website, develop 3 landing pages. Establish baseline metrics.</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-item-title">Weeks 3-5: Content Sprint</div>
-              <div class="timeline-item-desc">Publish 2 comparison guides, 4 customer case studies, launch LinkedIn campaign. Email nurture sequence goes live.</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-item-title">Weeks 6-8: Paid Scale</div>
-              <div class="timeline-item-desc">Double ad spend based on early performance. Paid search + LinkedIn ads fully deployed. Weekly optimization reviews begin.</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-item-title">Weeks 9-12: Optimization</div>
-              <div class="timeline-item-desc">Expand winners. Reallocate budget from underperformers. Executive readout on ROI and pipeline impact.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Success Metrics</div>
-          <div class="card-content">
-            <p><span style="color: var(--success); font-weight: 600;">→ Leads Generated:</span> 340+ qualified leads (target achieved in week 10)</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--success); font-weight: 600;">→ CAC:</span> Reduce to $839/lead (vs $1,200 baseline)</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--success); font-weight: 600;">→ Engagement:</span> 24%+ CTR on LinkedIn content</p>
-            <p style="margin-top: 0.75rem;"><span style="color: var(--success); font-weight: 600;">→ Pipeline:</span> $8.2M+ new pipeline by quarter end</p>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 1rem;">
-          <button class="button">Export Strategy Brief</button>
-          <button class="button secondary">Schedule Planning Session</button>
         </div>
       </div>
     </div>
-  </body>
+  </section>
+
+  <section class="frameworks">
+    <h2>Strategic frameworks at your command</h2>
+    <p class="lead">Pulled from top-tier methodologies, adapted by AI for your unique context.</p>
+    <div class="framework-grid">
+      <div class="framework-card">
+        <span class="framework-icon">🎯</span>
+        <h3>Positioning Matrix</h3>
+        <p>Competitive differentiation & value props</p>
+      </div>
+      <div class="framework-card">
+        <span class="framework-icon">📊</span>
+        <h3>Channel Mix</h3>
+        <p>Budget allocation & ROI forecasting</p>
+      </div>
+      <div class="framework-card">
+        <span class="framework-icon">⏱️</span>
+        <h3>Launch Timeline</h3>
+        <p>Phased rollouts & milestone planning</p>
+      </div>
+      <div class="framework-card">
+        <span class="framework-icon">📈</span>
+        <h3>KPI Scorecard</h3>
+        <p>North Star metrics & leading indicators</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Powered by Google Gemini — Strategic AI for non-technical founders</p>
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="research.html">Research</a>
+    <a href="strategy.html">Strategy</a>
+    <a href="content.html">Content</a>
+    <a href="analytics.html">Analytics</a>
+  </nav>
+</footer>
+
+<script>
+  // Advanced AI Strategy Integration
+  const generateBtn = document.getElementById('generateStrategyBtn');
+  const strategyTextDiv = document.getElementById('strategyText');
+  const loadingDots = document.getElementById('loadingDots');
+  const strategyContentDiv = document.getElementById('strategyContent');
+  
+  // Helper to get form values
+  function getFormData() {
+    return {
+      brandName: document.getElementById('brandName')?.value || '',
+      product: document.getElementById('product')?.value || '',
+      brandVibe: document.getElementById('brandVibe')?.value || '',
+      audience: document.getElementById('audience')?.value || '',
+      emotionalTrigger: document.getElementById('emotionalTrigger')?.value || '',
+      recentTactics: document.getElementById('recentTactics')?.value || '',
+      contentStyle: document.getElementById('contentStyle')?.value || '',
+      platform: document.getElementById('platform')?.value || '',
+      businessStage: document.getElementById('businessStage')?.value || '',
+      expectedResults: document.getElementById('expectedResults')?.value || '',
+      budget: document.getElementById('budget')?.value || '',
+      timeline: document.getElementById('timeline')?.value || '',
+      resources: document.getElementById('resources')?.value || '',
+      socialLinks: document.getElementById('socialLinks')?.value || ''
+    };
+  }
+  
+  // Display strategy response
+  function displayStrategy(data) {
+    const sections = [
+      { title: '📊 Business Reality Check', key: 'businessRealityCheck', icon: '⚡' },
+      { title: '🧠 Brand Psychology Analysis', key: 'brandPsychology', icon: '🎭' },
+      { title: '⚠️ Marketing Weaknesses', key: 'marketingWeaknesses', icon: '🔍' },
+      { title: '🚀 Strategic Opportunities', key: 'strategicOpportunities', icon: '💡' },
+      { title: '🎯 SMART Marketing Framework', key: 'smartFramework', icon: '📐' },
+      { title: '📱 Platform Strategy', key: 'platformStrategy', icon: '📲' },
+      { title: '📅 30-Day Action Plan', key: 'actionPlan', icon: '✅' },
+      { title: '⚠️ Risk Warnings', key: 'riskWarnings', icon: '⚠️' }
+    ];
+    
+    let html = '';
+    
+    for (const section of sections) {
+      const content = data[section.key];
+      if (content && content !== 'Not specified' && content !== 'N/A') {
+        html += `
+          <div class="strategy-section">
+            <h4>${section.icon} ${section.title}</h4>
+            <p>${escapeHtml(content)}</p>
+          </div>
+        `;
+      }
+    }
+    
+    // If no structured data, show what we have
+    if (!html) {
+      html = `
+        <div class="strategy-section">
+          <p>${escapeHtml(data.rawResponse || 'Analysis complete. Review recommendations above.')}</p>
+        </div>
+      `;
+    }
+    
+    strategyTextDiv.innerHTML = html;
+  }
+  
+  function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  async function generateStrategy() {
+    const formData = getFormData();
+    
+    // Show loading
+    loadingDots.style.display = "flex";
+    strategyTextDiv.innerHTML = "";
+    strategyContentDiv.classList.remove('visible');
+    generateBtn.disabled = true;
+    
+    try {
+      const response = await fetch('http://localhost:3000/strategy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      displayStrategy(data);
+      
+    } catch (error) {
+      console.error('Strategy generation error:', error);
+      strategyTextDiv.innerHTML = `
+        <div class="strategy-section">
+          <p style="color: #ef4444;">⚠️ Failed to connect to AI strategy backend.</p>
+          <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">
+            Make sure the server is running on http://localhost:3000
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.75rem;">Error: ${error.message}</p>
+        </div>
+      `;
+    } finally {
+      loadingDots.style.display = "none";
+      generateBtn.disabled = false;
+      setTimeout(() => {
+        strategyContentDiv.classList.add('visible');
+      }, 50);
+    }
+  }
+  
+  generateBtn.addEventListener('click', generateStrategy);
+</script>
+</body>
 </html>

@@ -1,238 +1,688 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="StratAI Research Agent — Market Intelligence &amp; Competitive Analysis" />
-    <title>Research Agent — StratAI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --bg-primary: #0f0f12;
-        --bg-secondary: #1a1a1f;
-        --bg-tertiary: #252530;
-        --bg-panel: #13131a;
-        --border: rgba(255,255,255,0.08);
-        --border-accent: rgba(106,168,255,0.15);
-        --text-primary: #e8eaed;
-        --text-secondary: #999ba3;
-        --text-muted: #6d7080;
-        --accent: #6aa8ff;
-        --accent-alt: #00d4ff;
-        --success: #2ecc71;
-        --warning: #f39c12;
-        --critical: #e74c3c;
-      }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
-      body {
-        font-family: 'Inter', system-ui, sans-serif;
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        -webkit-font-smoothing: antialiased;
-      }
-      a { color: inherit; text-decoration: none; }
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem;
-      }
-      .header {
-        margin-bottom: 2rem;
-      }
-      .nav-breadcrumb {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-      }
-      .nav-breadcrumb a {
-        color: var(--accent);
-      }
-      h1 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin: 0 0 0.5rem;
-        letter-spacing: -0.02em;
-      }
-      .subheader {
-        color: var(--text-secondary);
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-      }
-      .grid { display: grid; gap: 1.5rem; }
-      .card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.5rem;
-        transition: all 0.2s;
-      }
-      .card:hover {
-        border-color: var(--border-accent);
-        box-shadow: 0 0 16px rgba(106,168,255,0.1);
-      }
-      .card-title {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-      }
-      .card-content {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: var(--text-secondary);
-      }
-      .stat-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
-      .stat {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.25rem;
-      }
-      .stat-label {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-      }
-      .stat-value {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--accent);
-      }
-      .button {
-        padding: 0.6rem 1.25rem;
-        background: var(--accent);
-        color: var(--bg-primary);
-        border: none;
-        border-radius: 4px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-family: 'Inter', sans-serif;
-      }
-      .button:hover {
-        background: var(--accent-alt);
-        box-shadow: 0 0 16px rgba(0,212,255,0.3);
-      }
-      .button.secondary {
-        background: transparent;
-        color: var(--accent);
-        border: 1px solid var(--border-accent);
-      }
-      .button.secondary:hover {
-        background: rgba(106,168,255,0.1);
-      }
-      .list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .list li {
-        padding: 0.75rem 0;
-        border-bottom: 1px solid var(--border);
-        color: var(--text-secondary);
-      }
-      .list li:last-child {
-        border-bottom: none;
-      }
-      .highlight {
-        color: var(--accent);
-        font-weight: 600;
-      }
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: var(--bg-primary);
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgba(106,168,255,0.2);
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <div class="nav-breadcrumb"><a href="index.html">← Back to Command Center</a></div>
-        <h1>Research Agent</h1>
-        <p class="subheader">Market intelligence, competitor analysis, and growth projections powered by AI-driven reconnaissance.</p>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="StratAI Research — Market intelligence, competitor analysis, and growth projections powered by Google Gemini."/>
+<title>StratAI — Research Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ===== CINEMATIC DARK THEME (ALIGNED WITH INDEX) ===== */
+:root {
+  --bg-deep: #030408;
+  --bg-surface: #0a0c15;
+  --bg-card: rgba(15, 18, 30, 0.55);
+  --card-border: rgba(79, 70, 229, 0.2);
+  --card-border-hover: rgba(79, 70, 229, 0.6);
+  --indigo: #4f46e5;
+  --indigo-light: #818cf8;
+  --indigo-glow: rgba(79, 70, 229, 0.4);
+  --text-primary: #f0f3ff;
+  --text-secondary: #9ca3cf;
+  --text-muted: #6a7199;
+  --nav-bg: rgba(3, 4, 8, 0.75);
+  --radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ambient noise grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 70% 85%, rgba(139, 92, 246, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== NAVIGATION (MATCHES INDEX) ===== */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  height: 4rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(1.8);
+  border-bottom: 1px solid rgba(79, 70, 229, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 70, 229, 0.8) 20%, rgba(139, 92, 246, 0.7) 50%, rgba(79, 70, 229, 0.8) 80%, transparent 100%);
+}
+
+.logo {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #fff;
+  text-shadow: 0 0 24px rgba(99, 102, 241, 0.7);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+.nav-links a {
+  padding: 0.5rem 0.85rem;
+  font-size: 0.875rem;
+  color: rgba(200, 205, 245, 0.7);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-links a:hover {
+  color: #ffffff;
+  background: rgba(79, 70, 229, 0.2);
+}
+.nav-links a.active {
+  color: #fff;
+  background: rgba(79, 70, 229, 0.25);
+  text-shadow: 0 0 8px rgba(79, 70, 229, 0.5);
+}
+
+.nav-cta {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+  transition: all 0.25s;
+}
+.nav-cta:hover {
+  box-shadow: 0 0 32px rgba(79, 70, 229, 0.7);
+  transform: translateY(-1px);
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  text-align: center;
+  padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2rem) 2rem;
+  position: relative;
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0f3ff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.page-header .sub {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+/* ===== MAIN CONTENT ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Research Query Section */
+.query-section {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.query-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--indigo-light);
+  margin-bottom: 0.75rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-size: 0.7rem;
+  color: var(--indigo-light);
+  letter-spacing: 0.5px;
+}
+
+.query-input {
+  width: 100%;
+  background: rgba(3, 4, 8, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 0.8rem 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.query-input:focus {
+  outline: none;
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.query-submit {
+  margin-top: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 40px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  width: 100%;
+}
+
+.query-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(79, 70, 229, 0.5);
+}
+
+/* Results Section */
+.results-section {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  padding: 2rem;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-header h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.insight-badge {
+  background: rgba(79, 70, 229, 0.15);
+  border-radius: 40px;
+  padding: 0.3rem 1rem;
+  font-size: 0.7rem;
+  color: var(--indigo-light);
+}
+
+.analysis-content {
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.analysis-placeholder {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+}
+
+/* AI Simulation Elements */
+.ai-scan-strip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #4f46e5 25%, #818cf8 50%, #4f46e5 75%, transparent 100%);
+  background-size: 200% 100%;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.ai-scan-strip.active {
+  opacity: 1;
+  animation: scanMove 1.5s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.gemini-indicator {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1f2937;
+  border: 1px solid #4f46e5;
+  border-radius: 40px;
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8rem;
+  z-index: 1000;
+  transform: translateX(120%);
+  transition: transform 0.3s;
+  pointer-events: none;
+}
+
+.gemini-indicator.visible {
+  transform: translateX(0);
+}
+
+.gemini-dot {
+  width: 8px;
+  height: 8px;
+  background: #4f46e5;
+  border-radius: 50%;
+}
+
+.gemini-dot.pulse {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 8px #4f46e5; }
+}
+
+.gemini-text {
+  color: #e5e7eb;
+}
+
+.ai-status-toast {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  background: #1f2937;
+  border: 1px solid #4f46e5;
+  border-radius: 12px;
+  padding: 12px 20px;
+  min-width: 240px;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  z-index: 1000;
+  transform: translateX(120%);
+  transition: transform 0.25s;
+  pointer-events: none;
+}
+
+.ai-status-toast.visible {
+  transform: translateX(0);
+}
+
+@keyframes insightRing {
+  0% { transform: scale(0.5); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.insight-ring {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle, #4f46e5 0%, transparent 70%);
+  pointer-events: none;
+  animation: insightRing 0.6s ease-out forwards;
+  z-index: 999;
+}
+
+/* Footer */
+.footer {
+  background: rgba(3, 4, 8, 0.95);
+  border-top: 1px solid rgba(79, 70, 229, 0.15);
+  padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem);
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.footer p {
+  color: #6a7199;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0.75rem 1rem;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="ai-scan-strip" id="aiScanStrip"></div>
+<div class="gemini-indicator" id="geminiIndicator">
+  <div class="gemini-dot" id="geminiDot"></div>
+  <span class="gemini-text" id="geminiText">Gemini ready</span>
+</div>
+<div class="ai-status-toast" id="aiStatusToast">
+  <span id="toastIcon">✨</span>
+  <span id="toastMessage">AI analysis complete</span>
+</div>
+
+<header class="nav">
+  <a class="logo" href="index.html">StratAI</a>
+  <nav class="nav-links">
+    <a href="research.html" class="active">Research</a>
+    <a href="strategy.html">Strategy</a>
+    <a href="content.html">Content</a>
+    <a href="analytics.html">Analytics</a>
+  </nav>
+  <a class="nav-cta" href="#">Get Started</a>
+</header>
+
+<main>
+  <div class="page-header">
+    <h1>Research Agent</h1>
+    <p class="sub">Market intelligence, brand positioning research, and trend forecasting powered by Google Gemini</p>
+  </div>
+
+  <div class="container">
+    <div class="query-section">
+      <div class="query-label">🔍 BRAND & MARKET RESEARCH</div>
+      
+      <div class="form-grid">
+        <div class="form-field">
+          <label>🏷️ Brand/Company Name</label>
+          <input type="text" id="brandName" class="query-input" placeholder="Your brand name">
+        </div>
+        
+        <div class="form-field">
+          <label>🌐 Website URL</label>
+          <input type="text" id="websiteUrl" class="query-input" placeholder="https://example.com">
+        </div>
+        
+        <div class="form-field">
+          <label>📱 Social Media URLs</label>
+          <input type="text" id="socialUrls" class="query-input" placeholder="Instagram, LinkedIn, Twitter links">
+        </div>
+        
+        <div class="form-field">
+          <label>🏭 Industry/Niche</label>
+          <input type="text" id="industry" class="query-input" placeholder="e.g., SaaS, Fashion, Food & Beverage">
+        </div>
+        
+        <div class="form-field">
+          <label>⚔️ Competitors (optional)</label>
+          <input type="text" id="competitors" class="query-input" placeholder="Key competitors, separated by commas">
+        </div>
+        
+        <div class="form-field">
+          <label>🎯 Current Positioning (optional)</label>
+          <input type="text" id="positioning" class="query-input" placeholder="How do you currently position yourself?">
+        </div>
       </div>
+      
+      <button class="query-submit" id="submitQuery">🔬 Generate Market Intelligence →</button>
+    </div>
 
-      <div class="grid">
-        <div class="stat-row">
-          <div class="stat">
-            <div class="stat-label">Market Position</div>
-            <div class="stat-value">#2</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Share of Voice</div>
-            <div class="stat-value">23.4%</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Competitive Gap</div>
-            <div class="stat-value">7 months</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Market Opportunity</div>
-            <div class="stat-value">$2.3B</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Market Positioning Analysis</div>
-          <div class="card-content">
-            <p>Your organization is positioned as a <span class="highlight">mid-market efficiency leader</span>. Strong differentiation on ROI metrics, but weaker enterprise trust signals vs. category leaders. Recommended: Lead with customer outcomes + security/compliance proof points to shift perception upstream.</p>
-            <p style="margin-top: 1rem;">Competitor messaging over-indexes on feature parity. You own unique ground in <span class="highlight">speed-to-value</span> and <span class="highlight">outcome-driven deployment</span>.</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Competitive Intelligence (Live Feed)</div>
-          <ul class="list">
-            <li><span class="highlight">Competitor A:</span> 3 new patent filings for AI automation. Content strategy shifting to enterprise security narratives.</li>
-            <li><span class="highlight">Competitor B:</span> Launched vertical-specific solutions. Monthly marketing spend +47% QoQ.</li>
-            <li><span class="highlight">Competitor C:</span> Acquired smaller vendor. Estimated market consolidation play worth $180M+.</li>
-            <li><span class="highlight">Market Alert:</span> Industry consolidation accelerating. M&A activity +210% vs prior year.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Strategic Opportunities (Exploitation)</div>
-          <ul class="list">
-            <li><span class="highlight">Vertical Penetration:</span> Launch finance-specific landing pages. Competitor gap: 6 months. ROI potential: +$840M ARR.</li>
-            <li><span class="highlight">Content Differentiation:</span> Own comparison category via unbiased buyer guides. Estimated organic traffic gain: +340%.</li>
-            <li><span class="highlight">Deployment Speed:</span> Lead with "implement in 14 days" messaging. Competitors' positioning: 8-12 weeks.</li>
-            <li><span class="highlight">Partner Ecosystem:</span> Integrate with 3 high-velocity platforms. Market expansion: +$1.2B TAM.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card-title">90-Day Strategic Roadmap</div>
-          <div class="card-content">
-            <p><span class="highlight">Weeks 1-2:</span> Refresh core messaging + develop vertical targeting. Build 3 industry-specific landing pages.</p>
-            <p><span class="highlight">Weeks 3-6:</span> Launch content offensive. 8 comparison pieces + 5 case studies. LinkedIn thought leadership campaign.</p>
-            <p><span class="highlight">Weeks 7-9:</span> Paid advertising surge. Target competitor brand keywords + high-intent verticals. Estimated CAC: -22% vs baseline.</p>
-            <p><span class="highlight">Week 10-12:</span> Measure and optimize. Evaluate messaging resonance. Scale winners. ROI forecast: +$2.1B revenue impact by Q4.</p>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 1rem;">
-          <button class="button">Export Full Report</button>
-          <button class="button secondary">Request Agent Briefing</button>
+    <div class="results-section">
+      <div class="results-header">
+        <h2>📊 Intelligence Report</h2>
+        <span class="insight-badge">Gemini analysis</span>
+      </div>
+      <div id="analysisResult" class="analysis-content">
+        <div class="analysis-placeholder">
+          ✨ Complete the form above to generate strategic market intelligence
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Powered by Google Gemini · Real-time market intelligence</p>
+</footer>
+
+<script>
+// Advanced Market Intelligence System
+(function() {
+  const scanStrip = document.getElementById('aiScanStrip');
+  const geminiIndicator = document.getElementById('geminiIndicator');
+  const geminiDot = document.getElementById('geminiDot');
+  const geminiText = document.getElementById('geminiText');
+  const statusToast = document.getElementById('aiStatusToast');
+  const toastIcon = document.getElementById('toastIcon');
+  const toastMessage = document.getElementById('toastMessage');
+  const submitBtn = document.getElementById('submitQuery');
+  const analysisResult = document.getElementById('analysisResult');
+  
+  let isProcessing = false;
+  let toastTimeout, geminiTimeout;
+  
+  function showGeminiStatus(text, isPulsing) {
+    if (geminiText) geminiText.textContent = text;
+    if (geminiIndicator) {
+      geminiIndicator.classList.add('visible');
+      clearTimeout(geminiTimeout);
+      if (!isPulsing) {
+        geminiTimeout = setTimeout(() => {
+          if (!isProcessing) geminiIndicator.classList.remove('visible');
+        }, 2500);
+      }
+    }
+    if (geminiDot) {
+      if (isPulsing) geminiDot.classList.add('pulse');
+      else geminiDot.classList.remove('pulse');
+    }
+  }
+  
+  function showStatusMessage(message, icon, duration = 2000) {
+    if (toastIcon) toastIcon.textContent = icon || '✨';
+    if (toastMessage) toastMessage.textContent = message;
+    if (statusToast) {
+      statusToast.classList.add('visible');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => statusToast.classList.remove('visible'), duration);
+    }
+  }
+  
+  function startScan() {
+    if (scanStrip) scanStrip.classList.add('active');
+  }
+  
+  function stopScan() {
+    if (scanStrip) scanStrip.classList.remove('active');
+  }
+  
+  function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  function getFormData() {
+    return {
+      brandName: document.getElementById('brandName')?.value || '',
+      websiteUrl: document.getElementById('websiteUrl')?.value || '',
+      socialUrls: document.getElementById('socialUrls')?.value || '',
+      industry: document.getElementById('industry')?.value || '',
+      competitors: document.getElementById('competitors')?.value || '',
+      positioning: document.getElementById('positioning')?.value || ''
+    };
+  }
+  
+  function displayResearchResults(data) {
+    const sections = [
+      { title: '🎯 Current Brand Position', key: 'brandPosition', icon: '📍' },
+      { title: '📊 Market Reality', key: 'marketReality', icon: '🌊' },
+      { title: '👁️ Audience Perception', key: 'audiencePerception', icon: '👥' },
+      { title: '📝 Content Pattern Analysis', key: 'contentPatterns', icon: '🔄' },
+      { title: '⚔️ Competitor Pattern Detection', key: 'competitorPatterns', icon: '🎯' },
+      { title: '🔮 5-Year Projection', key: 'projection', icon: '📈' },
+      { title: '💡 Emerging Opportunities', key: 'opportunities', icon: '✨' },
+      { title: '⚠️ Risk Signals', key: 'risks', icon: '🚨' }
+    ];
+    
+    let html = '';
+    
+    for (const section of sections) {
+      const content = data[section.key];
+      if (content && content !== 'Not specified' && content !== 'N/A' && content !== 'Analysis complete') {
+        html += `
+          <div style="padding: 1rem 0; border-bottom: 1px solid rgba(79,70,229,0.15);">
+            <h3 style="color: #c7d2fe; margin-bottom: 0.75rem; font-size: 1rem;">${section.icon} ${section.title}</h3>
+            <p style="line-height: 1.6; white-space: pre-wrap;">${escapeHtml(content)}</p>
+          </div>
+        `;
+      }
+    }
+    
+    if (!html) {
+      html = `
+        <div style="padding: 1rem 0;">
+          <p style="line-height: 1.6;">${escapeHtml(data.rawResponse || 'Analysis complete. Review insights above.')}</p>
+        </div>
+      `;
+    }
+    
+    html += `
+      <div style="margin-top: 1rem; padding: 1rem; background: rgba(79,70,229,0.08); border-radius: 16px;">
+        <span style="color: var(--indigo-light);">⚡ Gemini market intelligence complete</span>
+        <span style="color: var(--text-muted); font-size: 0.75rem; margin-left: 1rem;">Generated in real-time</span>
+      </div>
+    `;
+    
+    analysisResult.innerHTML = html;
+  }
+  
+  async function generateResearch() {
+    if (isProcessing) return;
+    
+    const formData = getFormData();
+    
+    const hasData = formData.brandName || formData.websiteUrl || formData.industry;
+    if (!hasData) {
+      showStatusMessage('Please provide at least brand name, website, or industry', '⚠️', 2000);
+      return;
+    }
+    
+    isProcessing = true;
+    startScan();
+    showGeminiStatus('Gemini analyzing market position', true);
+    showStatusMessage('Analyzing market intelligence...', '🔬', 3000);
+    
+    analysisResult.innerHTML = `
+      <div style="text-align: center; padding: 2rem;">
+        <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid var(--indigo-light); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+        <p style="color: var(--text-muted);">🔍 Analyzing brand positioning and market dynamics...</p>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">This may take 10-15 seconds</p>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+      </div>
+    `;
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
+      
+      const response = await fetch('http://localhost:3000/research', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      displayResearchResults(data);
+      
+      stopScan();
+      showGeminiStatus('Market intelligence complete', false);
+      showStatusMessage('Research complete', '🎯', 2000);
+      
+    } catch (error) {
+      console.error('Research error:', error);
+      
+      let errorMsg = "Failed to generate market intelligence";
+      if (error.name === 'AbortError') errorMsg = "Request timeout - please try again";
+      else if (error.message.includes('Failed to fetch')) errorMsg = "Cannot reach backend - is server running?";
+      
+      analysisResult.innerHTML = `
+        <div style="text-align: center; padding: 2rem;">
+          <p style="color: #ef4444; margin-bottom: 1rem;">⚠️ ${errorMsg}</p>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Make sure server is running: node server.js</p>
+          <p style="color: var(--text-muted); font-size: 0.75rem;">Error: ${error.message}</p>
+        </div>
+      `;
+      
+      stopScan();
+      showGeminiStatus('Connection failed', false);
+      showStatusMessage('Research failed', '⚠️', 3000);
+    } finally {
+      isProcessing = false;
+    }
+  }
+  
+  submitBtn.addEventListener('click', generateResearch);
+  
+  setTimeout(() => showGeminiStatus('Gemini active', false), 500);
+})();
+</script>
+</body>
 </html>

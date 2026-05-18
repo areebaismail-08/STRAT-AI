@@ -1,956 +1,721 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="StratAI — Autonomous Strategic Intelligence Platform for Enterprise Decision-Making" />
-    <title>StratAI Command Center</title>
+    <meta name="description" content="StratAI — Your AI Marketing Team. Research, Strategy, Content &amp; Analytics. Automated." />
+    <title>StratAI — AI Marketing Team</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --bg-primary: #0f0f12;
-        --bg-secondary: #1a1a1f;
-        --bg-tertiary: #252530;
-        --bg-panel: #13131a;
-        --border: rgba(255,255,255,0.08);
-        --border-accent: rgba(106,168,255,0.15);
-        --text-primary: #e8eaed;
-        --text-secondary: #999ba3;
-        --text-muted: #6d7080;
-        --accent: #6aa8ff;
-        --accent-alt: #00d4ff;
-        --success: #2ecc71;
-        --warning: #f39c12;
-        --critical: #e74c3c;
-        --risk-low: #2ecc71;
-        --risk-med: #f39c12;
-        --risk-high: #e74c3c;
+        --white: #ffffff;
+        --alt: #f4f7fa;
+        --navy: #1a2b4b;
+        --indigo: #4f46e5;
+        --gold: #ffd700;
+        --text: #1f2937;
+        --text-muted: #6b7280;
+        --radius: 12px;
+        --shadow: 0 4px 24px rgba(26,43,75,0.08);
+
+        --bg-base: #07080f;
+        --bg-surface: #0d1117;
+        --bg-card: rgba(255,255,255,0.035);
+        --card-border: rgba(79,70,229,0.18);
+        --card-border-hover: rgba(79,70,229,0.45);
+        --text-primary: #e8eaf0;
+        --text-secondary: #8b92a8;
+        --nav-bg: rgba(7,8,15,0.82);
       }
 
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
+      *, *::before, *::after { box-sizing: border-box; }
+
       body {
-        font-family: 'Inter', system-ui, sans-serif;
-        background: var(--bg-primary);
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
         color: var(--text-primary);
+        background: var(--bg-base);
         -webkit-font-smoothing: antialiased;
-        display: flex;
-        height: 100vh;
-        overflow: hidden;
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 180px 180px;
+        opacity: 0.028;
+        pointer-events: none;
+        z-index: 0;
       }
 
       a { color: inherit; text-decoration: none; }
 
-      /* SIDEBAR */
-      .sidebar {
-        width: 280px;
-        background: var(--bg-secondary);
-        border-right: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        overflow-y: auto;
-      }
+      .skip { position: absolute; left: -9999px; top: 0; padding: 0.75rem 1rem; background: var(--indigo); color: #fff; z-index: 100; }
+      .skip:focus { left: 1rem; top: 1rem; }
 
-      .sidebar-header {
-        padding: 1.5rem 1.25rem;
-        border-bottom: 1px solid var(--border);
+      /* ── NAV ── */
+      .nav {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        font-family: 'IBM Plex Mono', monospace;
+        justify-content: space-between;
+        padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+        height: 4rem;
+        background: var(--nav-bg);
+        backdrop-filter: blur(18px) saturate(1.6);
+        -webkit-backdrop-filter: blur(18px) saturate(1.6);
+        border-bottom: 1px solid rgba(79,70,229,0.12);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      .nav::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(79,70,229,0.7) 30%, rgba(139,92,246,0.6) 60%, transparent 100%);
+      }
+
+      .logo {
+        font-family: "JetBrains Mono", monospace;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 1.15rem;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(99,102,241,0.6);
         letter-spacing: 0.04em;
       }
 
-      .sidebar-logo-icon {
-        width: 32px;
-        height: 32px;
-        background: linear-gradient(135deg, var(--accent), var(--accent-alt));
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.6rem;
-        font-weight: 700;
-        color: var(--bg-primary);
-      }
-
-      .sidebar-nav {
-        flex: 1;
-        padding: 0.75rem 0.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-
-      .nav-item {
-        padding: 0.75rem 1rem;
+      .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; justify-content: center; }
+      .nav-links a {
+        padding: 0.5rem 0.85rem;
         font-size: 0.875rem;
-        color: var(--text-secondary);
-        border-radius: 4px;
-        border-left: 2px solid transparent;
-        cursor: pointer;
-        transition: all 0.15s;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+        color: rgba(200,205,225,0.65);
+        border-radius: 8px;
+        transition: color 0.2s, background 0.2s;
       }
+      .nav-links a:hover { color: #e8eaf0; background: rgba(79,70,229,0.12); }
 
-      .nav-item:hover {
-        background: rgba(106,168,255,0.08);
-        color: var(--text-primary);
-        border-left-color: var(--accent);
-      }
-
-      .nav-item.active {
-        background: rgba(106,168,255,0.12);
-        color: var(--accent);
-        border-left-color: var(--accent);
+      .nav-cta {
+        padding: 0.5rem 1.15rem;
+        font-size: 0.875rem;
         font-weight: 500;
+        color: #fff;
+        background: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+        border-radius: 8px;
+        box-shadow: 0 0 16px rgba(79,70,229,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+        transition: box-shadow 0.2s, transform 0.15s;
+      }
+      .nav-cta:hover {
+        box-shadow: 0 0 28px rgba(79,70,229,0.55), inset 0 1px 0 rgba(255,255,255,0.12);
+        transform: translateY(-1px);
       }
 
-      .nav-icon {
-        width: 16px;
-        height: 16px;
-        font-size: 0.7rem;
+      /* ── HERO ── */
+      .hero {
+        position: relative;
+        text-align: center;
+        padding: clamp(4rem, 12vw, 7rem) clamp(1.25rem, 4vw, 2rem) clamp(5rem, 14vw, 8rem);
+        background: transparent;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        left: 50%; top: 38%;
+        transform: translate(-50%, -50%);
+        width: min(110vw, 1000px);
+        height: min(80vh, 680px);
+        background:
+          radial-gradient(ellipse 60% 55% at 50% 50%, rgba(79,70,229,0.18) 0%, rgba(79,70,229,0.07) 38%, transparent 68%),
+          radial-gradient(ellipse 35% 28% at 68% 28%, rgba(139,92,246,0.13) 0%, transparent 58%),
+          radial-gradient(ellipse 25% 20% at 30% 65%, rgba(99,102,241,0.08) 0%, transparent 55%);
+        pointer-events: none;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        left: 50%; top: 72%;
+        transform: translateX(-50%);
+        width: 55%;
+        height: 1px;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(79,70,229,0.3) 15%,
+          rgba(139,92,246,0.65) 40%,
+          rgba(167,139,250,0.7) 50%,
+          rgba(139,92,246,0.65) 60%,
+          rgba(79,70,229,0.3) 85%,
+          transparent 100%
+        );
+        filter: blur(0.4px);
+        pointer-events: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        max-width: 52rem;
+        margin: 0 auto;
+        z-index: 1;
+      }
+
+      .hero-inner::before {
+        content: "";
+        display: block;
+        width: 48px;
+        height: 2px;
+        margin: 0 auto 1.5rem;
+        background: linear-gradient(90deg, rgba(79,70,229,0.5), rgba(167,139,250,0.9), rgba(79,70,229,0.5));
+        border-radius: 2px;
+        box-shadow: 0 0 12px rgba(139,92,246,0.6);
+      }
+
+      .hero h1 {
+        margin: 0 0 1.25rem;
+        font-size: clamp(1.85rem, 4.5vw, 3rem);
+        font-weight: 300;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        background: linear-gradient(160deg, #ffffff 0%, #e8eaf0 25%, #c4c8e8 55%, #a78bfa 80%, #7c6fe0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 28px rgba(99,102,241,0.28)) drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+      }
+
+      .hero .sub {
+        margin: 0 auto 2.25rem;
+        max-width: 36rem;
+        font-size: 1.125rem;
+        line-height: 1.65;
+        color: rgba(160,166,196,0.82);
+        letter-spacing: 0.01em;
+      }
+
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+
+      .btn-primary {
+        position: relative;
+        padding: 0.875rem 1.85rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: #fff;
+        background: linear-gradient(135deg, #5b51f0 0%, #7c3aed 100%);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow:
+          0 0 0 1px rgba(139,92,246,0.4),
+          0 0 20px rgba(79,70,229,0.35),
+          0 4px 16px rgba(0,0,0,0.45),
+          inset 0 1px 0 rgba(255,255,255,0.15);
+        transition: box-shadow 0.22s, transform 0.18s;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0; left: -75%;
+        width: 50%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+        transform: skewX(-18deg);
+        transition: left 0.45s ease;
+      }
+      .btn-primary:hover::before { left: 130%; }
+      .btn-primary:hover {
+        box-shadow:
+          0 0 0 1px rgba(139,92,246,0.6),
+          0 0 32px rgba(99,102,241,0.55),
+          0 6px 24px rgba(0,0,0,0.5),
+          inset 0 1px 0 rgba(255,255,255,0.18);
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        position: relative;
+        padding: 0.875rem 1.85rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: rgba(200,205,230,0.8);
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(99,102,241,0.3);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 2px 8px rgba(0,0,0,0.3);
+        transition: background 0.22s, border-color 0.22s, color 0.22s, transform 0.18s, box-shadow 0.22s;
+      }
+      .btn-outline:hover {
+        background: rgba(79,70,229,0.09);
+        border-color: rgba(139,92,246,0.55);
+        color: rgba(220,224,245,0.95);
+        transform: translateY(-2px);
+        box-shadow: 0 0 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.07);
+      }
+
+      /* ── PIPELINE STRIP ── */
+      .pipeline {
+        position: relative;
+        z-index: 1;
+        padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+        margin-top: -2rem;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .pipeline-inner {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        opacity: 0.6;
+        gap: 0;
+        background: rgba(255,255,255,0.028);
+        border: 1px solid rgba(99,102,241,0.16);
+        border-radius: 100px;
+        padding: 0.6rem 2rem;
+        backdrop-filter: blur(20px) saturate(1.4);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.04) inset,
+          0 4px 32px rgba(0,0,0,0.35),
+          0 0 40px rgba(79,70,229,0.07);
+        flex-wrap: wrap;
+        row-gap: 0.4rem;
       }
 
-      .sidebar-footer {
-        padding: 1rem;
-        border-top: 1px solid var(--border);
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+      /* travelling light beam along the top edge */
+      .pipeline-inner::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        border-radius: 100px;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(139,92,246,0.0) 10%,
+          rgba(167,139,250,0.9) 50%,
+          rgba(139,92,246,0.0) 90%,
+          transparent 100%
+        );
+        background-size: 200% 100%;
+        animation: beam 4s ease-in-out infinite;
       }
 
-      /* TOP BAR */
-      .topbar {
-        position: fixed;
-        top: 0;
-        left: 280px;
-        right: 0;
-        height: 60px;
-        background: var(--bg-secondary);
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 2rem;
-        z-index: 100;
+      @keyframes beam {
+        0%   { background-position: -100% 0; opacity: 0.5; }
+        50%  { background-position: 100% 0;  opacity: 1;   }
+        100% { background-position: 300% 0;  opacity: 0.5; }
       }
 
-      .topbar-left {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-      }
-
-      .system-status {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.8rem;
-        font-family: 'IBM Plex Mono', monospace;
-      }
-
-      .status-indicator {
-        width: 8px;
-        height: 8px;
-        background: var(--success);
-        border-radius: 50%;
-        box-shadow: 0 0 8px rgba(46,204,113,0.6);
-        animation: pulse-status 2s ease-in-out infinite;
-      }
-
-      @keyframes pulse-status {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-
-      .topbar-time {
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.8rem;
-        color: var(--text-muted);
-      }
-
-      .topbar-right {
+      .pipeline-node {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 0.55rem;
+        padding: 0.35rem 0.9rem;
+        border-radius: 100px;
+        transition: background 0.25s ease;
+        text-decoration: none;
+        cursor: default;
       }
 
-      .cta-button {
-        padding: 0.6rem 1.25rem;
-        background: var(--accent);
-        color: var(--bg-primary);
-        border: none;
-        border-radius: 4px;
-        font-size: 0.875rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-family: 'Inter', sans-serif;
+      .pipeline-node:hover {
+        background: rgba(99,102,241,0.1);
       }
 
-      .cta-button:hover {
-        background: var(--accent-alt);
-        box-shadow: 0 0 16px rgba(0,212,255,0.3);
-      }
-
-      .cta-button.secondary {
-        background: transparent;
-        color: var(--accent);
-        border: 1px solid var(--border-accent);
-      }
-
-      .cta-button.secondary:hover {
-        background: rgba(106,168,255,0.1);
-      }
-
-      /* MAIN CONTENT */
-      .main-container {
-        display: flex;
-        flex: 1;
-        margin-top: 60px;
-        overflow: hidden;
-      }
-
-      .content-area {
-        flex: 1;
-        background: var(--bg-primary);
-        overflow-y: auto;
-        padding: 2rem;
-      }
-
-      .right-panel {
-        width: 320px;
-        background: var(--bg-secondary);
-        border-left: 1px solid var(--border);
-        overflow-y: auto;
-        padding: 1.5rem;
-      }
-
-      /* HERO SECTION */
-      .hero {
-        margin-bottom: 2.5rem;
-      }
-
-      .hero-headline {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin: 0 0 0.5rem;
-        letter-spacing: -0.02em;
-      }
-
-      .hero-subheadline {
-        font-size: 1.05rem;
-        color: var(--text-secondary);
-        margin: 0 0 1.75rem;
-        max-width: 700px;
-        line-height: 1.6;
-        font-weight: 400;
-      }
-
-      .hero-actions {
-        display: flex;
-        gap: 1rem;
-      }
-
-      /* DASHBOARD GRID */
-      .dashboard {
-        display: grid;
-        gap: 1.5rem;
-      }
-
-      .section-title {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      /* CARDS */
-      .card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.25rem;
-        transition: all 0.2s;
-      }
-
-      .card:hover {
-        border-color: var(--border-accent);
-        box-shadow: 0 0 16px rgba(106,168,255,0.1);
-      }
-
-      /* KPI ROW */
-      .kpi-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .kpi-card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.25rem;
-        transition: all 0.2s;
-      }
-
-      .kpi-card:hover {
-        border-color: var(--border-accent);
-        box-shadow: 0 0 12px rgba(106,168,255,0.08);
-      }
-
-      .kpi-label {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-      }
-
-      .kpi-value {
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 0.35rem;
-      }
-
-      .kpi-change {
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-      }
-
-      .kpi-change.positive { color: var(--success); }
-      .kpi-change.negative { color: var(--critical); }
-
-      /* ALERTS */
-      .alerts-section {
-        margin-bottom: 1.5rem;
-      }
-
-      .alert {
-        background: var(--bg-panel);
-        border-left: 3px solid;
-        border-radius: 4px;
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-        font-size: 0.875rem;
-        display: flex;
-        gap: 0.75rem;
-        align-items: flex-start;
-      }
-
-      .alert.critical { border-left-color: var(--critical); }
-      .alert.warning { border-left-color: var(--warning); }
-      .alert.info { border-left-color: var(--accent); }
-
-      .alert-icon {
-        font-size: 1rem;
-        flex-shrink: 0;
-        margin-top: 0.1rem;
-      }
-
-      .alert-content {
-        flex: 1;
-      }
-
-      .alert-title {
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.2rem;
-      }
-
-      .alert-desc {
-        color: var(--text-secondary);
-        font-size: 0.8rem;
-      }
-
-      /* RISK MATRIX */
-      .risk-matrix {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.25rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .risk-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
-
-      .risk-item {
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 0.75rem;
-        text-align: center;
-        font-size: 0.8rem;
-      }
-
-      .risk-indicator {
+      .pipeline-dot {
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        display: inline-block;
-        margin-right: 0.4rem;
+        background: rgba(139,92,246,0.7);
+        box-shadow: 0 0 6px rgba(139,92,246,0.8), 0 0 12px rgba(99,102,241,0.4);
+        flex-shrink: 0;
+        animation: pulse-dot 3s ease-in-out infinite;
       }
 
-      .risk-indicator.low { background: var(--risk-low); }
-      .risk-indicator.med { background: var(--risk-med); }
-      .risk-indicator.high { background: var(--risk-high); }
+      .pipeline-node:nth-child(1) .pipeline-dot { animation-delay: 0s;    }
+      .pipeline-node:nth-child(3) .pipeline-dot { animation-delay: 0.75s; }
+      .pipeline-node:nth-child(5) .pipeline-dot { animation-delay: 1.5s;  }
+      .pipeline-node:nth-child(7) .pipeline-dot { animation-delay: 2.25s; }
 
-      /* ACTIVITY FEED */
-      .activity-feed {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1.25rem;
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 0.5; transform: scale(1);    box-shadow: 0 0 6px rgba(139,92,246,0.6); }
+        50%       { opacity: 1;   transform: scale(1.35); box-shadow: 0 0 10px rgba(139,92,246,1), 0 0 20px rgba(99,102,241,0.5); }
       }
 
-      .activity-item {
-        border-bottom: 1px solid var(--border);
-        padding: 0.75rem 0;
-        font-size: 0.85rem;
+      .pipeline-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(185,190,220,0.75);
+        transition: color 0.25s ease;
+      }
+
+      .pipeline-node:hover .pipeline-label {
+        color: rgba(210,215,240,0.95);
+      }
+
+      /* connector arrow between nodes */
+      .pipeline-arrow {
         display: flex;
-        gap: 0.75rem;
-      }
-
-      .activity-item:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-      }
-
-      .activity-timestamp {
-        color: var(--text-muted);
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.75rem;
-        white-space: nowrap;
+        align-items: center;
+        padding: 0 0.1rem;
         flex-shrink: 0;
       }
 
-      .activity-text {
-        flex: 1;
-        color: var(--text-secondary);
+      .pipeline-arrow svg {
+        width: 28px;
+        height: 8px;
+        overflow: visible;
       }
 
-      /* SIMULATION PANEL */
-      .simulation-panel {
-        background: var(--bg-panel);
-        border: 1px solid var(--border-accent);
-        border-radius: 6px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
+      .pipeline-arrow .arrow-line {
+        stroke: rgba(99,102,241,0.35);
+        stroke-width: 1;
+        stroke-dasharray: 4 3;
+        animation: dash-flow 2s linear infinite;
+      }
+
+      .pipeline-arrow .arrow-head {
+        fill: rgba(139,92,246,0.55);
+      }
+
+      @keyframes dash-flow {
+        from { stroke-dashoffset: 14; }
+        to   { stroke-dashoffset: 0;  }
+      }
+
+      /* ── AGENTS SECTION ── */
+      .agents {
+        padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2.5rem);
+        background: transparent;
+        position: relative;
+        z-index: 1;
+      }
+
+      .agents::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg,
+          transparent 0%,
+          rgba(7,8,15,0.4) 20%,
+          rgba(9,10,22,0.6) 50%,
+          rgba(7,8,15,0.4) 80%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+
+      .agents::after {
+        content: "";
+        position: absolute;
+        left: 50%; top: 50%;
+        transform: translate(-50%, -50%);
+        width: min(100vw, 900px);
+        height: 60%;
+        background: radial-gradient(ellipse 70% 60% at 50% 50%,
+          rgba(79,70,229,0.07) 0%,
+          rgba(99,102,241,0.03) 45%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .agents h2 {
+        text-align: center;
+        margin: 0 0 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #d8daea;
+        position: relative;
+        letter-spacing: -0.01em;
+      }
+
+      .agents .lead {
+        text-align: center;
+        margin: 0 auto 2.5rem;
+        max-width: 32rem;
+        font-size: 0.9375rem;
+        color: rgba(140,148,175,0.8);
+        position: relative;
+        line-height: 1.6;
+      }
+
+      .agent-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        justify-content: center;
+        position: relative;
+      }
+
+      .agent-card {
+        flex: 1 1 220px;
+        max-width: 260px;
+        padding: 1.75rem 1.5rem;
+        background: linear-gradient(145deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 60%, rgba(79,70,229,0.04) 100%);
+        border-radius: 14px;
+        border: 1px solid rgba(99,102,241,0.18);
+        outline: 1px solid rgba(255,255,255,0.04);
+        outline-offset: -1px;
+        backdrop-filter: blur(20px) saturate(1.5) brightness(1.04);
+        -webkit-backdrop-filter: blur(20px) saturate(1.5) brightness(1.04);
+        box-shadow:
+          0 4px 24px rgba(0,0,0,0.38),
+          0 8px 32px rgba(79,70,229,0.06),
+          inset 0 1px 0 rgba(255,255,255,0.09),
+          inset 0 -1px 0 rgba(0,0,0,0.2);
         position: relative;
         overflow: hidden;
+        transition:
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.28s ease,
+          background 0.28s ease;
       }
 
-      .simulation-panel::before {
-        content: '';
+      .agent-card::before {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 8%; right: 8%;
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        background: linear-gradient(90deg,
+          transparent,
+          rgba(167,139,250,0.55) 35%,
+          rgba(199,180,255,0.75) 50%,
+          rgba(167,139,250,0.55) 65%,
+          transparent
+        );
+        opacity: 0.8;
+        transition: opacity 0.28s ease;
       }
 
-      .simulation-header {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1.25rem;
+      .agent-card::after {
+        content: "";
+        position: absolute;
+        bottom: -30px; right: -30px;
+        width: 100px; height: 100px;
+        background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        pointer-events: none;
+      }
+
+      .agent-card:hover {
+        transform: translateY(-7px) scale(1.012);
+        background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 55%, rgba(79,70,229,0.08) 100%);
+        border-color: rgba(139,92,246,0.42);
+        box-shadow:
+          0 20px 56px rgba(0,0,0,0.48),
+          0 0 36px rgba(79,70,229,0.2),
+          0 0 80px rgba(79,70,229,0.08),
+          inset 0 1px 0 rgba(255,255,255,0.13),
+          inset 0 -1px 0 rgba(0,0,0,0.22);
+      }
+
+      .agent-card:hover::before { opacity: 1; }
+      .agent-card:hover::after { opacity: 1; transform: translate(-6px, -6px); }
+
+      .agent-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        display: block;
+        filter: drop-shadow(0 0 10px rgba(99,102,241,0.55)) drop-shadow(0 0 3px rgba(167,139,250,0.3));
+        transition: filter 0.28s ease, transform 0.28s ease;
+      }
+
+      .agent-card:hover .agent-icon {
+        filter: drop-shadow(0 0 16px rgba(99,102,241,0.75)) drop-shadow(0 0 6px rgba(167,139,250,0.45));
+        transform: scale(1.08) translateY(-1px);
+      }
+
+      .agent-card h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.05rem;
         font-weight: 600;
-        color: var(--accent);
-        font-size: 0.9rem;
+        color: #cdd0ea;
+        letter-spacing: -0.01em;
+        transition: color 0.22s ease;
+      }
+      .agent-card:hover h3 { color: #e2e4f4; }
+
+      .agent-card p {
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.58;
+        color: rgba(138,146,175,0.85);
       }
 
-      .sim-pulse {
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
-        animation: pulse-status 1.5s ease-in-out infinite;
+      .agent-card .link {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: rgba(139,120,255,0.8);
+        letter-spacing: 0.01em;
+        transition: color 0.22s ease, letter-spacing 0.22s ease;
+      }
+      .agent-card:hover .link { color: #b79fff; letter-spacing: 0.025em; }
+
+      /* ── FOOTER ── */
+      .footer {
+        background: rgba(5,6,12,0.9);
+        border-top: 1px solid rgba(79,70,229,0.1);
+        padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem);
+        text-align: center;
+        position: relative;
+        z-index: 1;
       }
 
-      .scenario-box {
-        background: var(--bg-tertiary);
-        border: 1px solid rgba(106,168,255,0.2);
-        border-radius: 4px;
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-        font-size: 0.85rem;
+      .footer p {
+        margin: 0 0 1rem;
+        font-size: 0.875rem;
+        color: rgba(160,165,190,0.5);
       }
 
-      .scenario-title {
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
+      .footer-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; justify-content: center; }
+      .footer-nav a {
+        font-size: 0.875rem;
+        color: rgba(200,205,225,0.5);
+        transition: color 0.2s;
       }
+      .footer-nav a:hover { color: var(--gold); text-shadow: 0 0 10px rgba(255,215,0,0.4); }
 
-      .scenario-metric {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.4rem;
-        font-size: 0.8rem;
-      }
-
-      .scenario-metric-label {
-        color: var(--text-muted);
-      }
-
-      .scenario-metric-value {
-        color: var(--accent);
-        font-weight: 600;
-        font-family: 'IBM Plex Mono', monospace;
-      }
-
-      /* RIGHT PANEL */
-      .panel-section {
-        margin-bottom: 1.75rem;
-      }
-
-      .panel-section-title {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 0.75rem;
-      }
-
-      .agent-status {
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 0.75rem;
-        margin-bottom: 0.5rem;
-        font-size: 0.8rem;
-      }
-
-      .agent-name {
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.3rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .agent-indicator {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--success);
-      }
-
-      .agent-status-text {
-        color: var(--text-muted);
-        font-size: 0.75rem;
-      }
-
-      /* SCROLLBAR */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: var(--bg-primary);
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: rgba(106,168,255,0.2);
-        border-radius: 4px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: rgba(106,168,255,0.35);
-      }
-
-      /* RESPONSIVE */
-      @media (max-width: 1400px) {
-        .sidebar { width: 240px; }
-        .topbar { left: 240px; }
-        .right-panel { width: 280px; }
-      }
-
-      @media (max-width: 1024px) {
-        .right-panel { display: none; }
-        .main-container { flex-direction: column; }
+      @media (max-width: 768px) {
+        .nav { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; }
+        .nav-links { order: 3; width: 100%; }
+        .pipeline-inner { padding: 0.6rem 1rem; }
+        .pipeline-label { font-size: 0.65rem; }
       }
     </style>
   </head>
   <body>
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-logo-icon">A</div>
-        <span>StratAI</span>
-      </div>
-
-      <nav class="sidebar-nav">
-        <div class="nav-item active">
-          <div class="nav-icon">◈</div>
-          <span>Overview</span>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">◆</div>
-          <span>Intelligence Agents</span>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">⚠</div>
-          <span>Strategic Risks</span>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">📈</div>
-          <span>Forecasts</span>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">⚡</div>
-          <span>Simulations</span>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">📊</div>
-          <span>Executive Reports</span>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">🔐</div>
-          <span>Governance</span>
-        </div>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <a class="logo" href="index.html">StratAI</a>
+      <nav class="nav-links" aria-label="Agents">
+        <a href="research.html">Research</a>
+        <a href="strategy.html">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
       </nav>
+      <a class="nav-cta" href="research.html">Get Started</a>
+    </header>
 
-      <div class="sidebar-footer">
-        <div>Org: Acme Corp</div>
-        <div>Region: US-EAST</div>
-        <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">© 2026 StratAI</div>
-      </div>
-    </aside>
-
-    <!-- TOP BAR -->
-    <div class="topbar">
-      <div class="topbar-left">
-        <div class="system-status">
-          <div class="status-indicator"></div>
-          <span>System: OPERATIONAL</span>
-        </div>
-      </div>
-
-      <div class="topbar-time">
-        <span id="current-time">14:32 UTC</span>
-      </div>
-
-      <div class="topbar-right">
-        <button class="cta-button secondary">View Simulation</button>
-        <button class="cta-button">Launch Command Center</button>
-      </div>
-    </div>
-
-    <!-- MAIN CONTAINER -->
-    <div class="main-container">
-      <!-- CONTENT AREA -->
-      <div class="content-area">
-        <div class="hero">
-          <h1 class="hero-headline">Autonomous Strategic Intelligence</h1>
-          <p class="hero-subheadline">Coordinate AI agents, simulate strategic decisions, and detect operational risks before they become crises.</p>
+    <main id="main">
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Your AI Marketing Team — Research, Strategy, Content &amp; Analytics. Automated.</h1>
+          <p class="sub">Bridge the gap between technical capability and tangible business outcomes.</p>
           <div class="hero-actions">
-            <button class="cta-button">Launch Full Command Center</button>
-            <button class="cta-button secondary">Request Demo</button>
+            <a class="btn-primary" href="research.html">Get Started</a>
+            <a class="btn-outline" href="#agents">See How It Works</a>
           </div>
         </div>
+      </section>
 
-        <div class="dashboard">
-          <!-- KPI SECTION -->
-          <div>
-            <div class="section-title">◈ KEY PERFORMANCE INDICATORS</div>
-            <div class="kpi-row">
-              <div class="kpi-card">
-                <div class="kpi-label">Strategic Confidence</div>
-                <div class="kpi-value">94.2%</div>
-                <div class="kpi-change positive">↑ 3.1% this week</div>
-              </div>
-              <div class="kpi-card">
-                <div class="kpi-label">Risk-Weighted Score</div>
-                <div class="kpi-value">7.8/10</div>
-                <div class="kpi-change negative">↓ 0.4 vs baseline</div>
-              </div>
-              <div class="kpi-card">
-                <div class="kpi-label">Active Agents</div>
-                <div class="kpi-value">4/4</div>
-                <div class="kpi-change positive">✓ All operational</div>
-              </div>
-              <div class="kpi-card">
-                <div class="kpi-label">Anomalies Detected</div>
-                <div class="kpi-value">12</div>
-                <div class="kpi-change negative">3 critical</div>
-              </div>
-            </div>
+      <!-- ── PIPELINE STRIP ── -->
+      <div class="pipeline" aria-label="AI pipeline: Research to Analytics">
+        <div class="pipeline-inner">
+
+          <div class="pipeline-node">
+            <span class="pipeline-dot"></span>
+            <span class="pipeline-label">Research</span>
           </div>
 
-          <!-- ALERTS SECTION -->
-          <div class="alerts-section">
-            <div class="section-title">⚠ OPERATIONAL ALERTS</div>
-            <div class="alert critical">
-              <div class="alert-icon">🔴</div>
-              <div class="alert-content">
-                <div class="alert-title">Critical: Market Volatility Spike Detected</div>
-                <div class="alert-desc">NYSE volatility index increased 34% in last 2 hours. Strategic exposure at 2.3x recommended threshold. Recommend portfolio rebalancing.</div>
-              </div>
-            </div>
-            <div class="alert warning">
-              <div class="alert-icon">🟠</div>
-              <div class="alert-content">
-                <div class="alert-title">Warning: Competitor Action Identified</div>
-                <div class="alert-desc">Detected 3 new IP filings from primary competitor. Analysis suggests market entry in Q3. Confidence: 87%.</div>
-              </div>
-            </div>
-            <div class="alert info">
-              <div class="alert-icon">🔵</div>
-              <div class="alert-content">
-                <div class="alert-title">Info: AI Agent Training Complete</div>
-                <div class="alert-desc">Strategic forecasting agent trained on 18 months of enterprise data. Accuracy improved to 92.1%.</div>
-              </div>
-            </div>
+          <div class="pipeline-arrow" aria-hidden="true">
+            <svg viewBox="0 0 28 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="4" x2="22" y2="4" class="arrow-line"/>
+              <polygon points="22,1 28,4 22,7" class="arrow-head"/>
+            </svg>
           </div>
 
-          <!-- RISK MATRIX -->
-          <div class="risk-matrix">
-            <div class="section-title">⚡ RISK ASSESSMENT MATRIX</div>
-            <div class="risk-grid">
-              <div class="risk-item">
-                <span class="risk-indicator high"></span> Geopolitical: HIGH
-              </div>
-              <div class="risk-item">
-                <span class="risk-indicator med"></span> Macro: MEDIUM
-              </div>
-              <div class="risk-item">
-                <span class="risk-indicator low"></span> Regulatory: LOW
-              </div>
-              <div class="risk-item">
-                <span class="risk-indicator med"></span> Operational: MEDIUM
-              </div>
-              <div class="risk-item">
-                <span class="risk-indicator high"></span> Cyber: HIGH
-              </div>
-              <div class="risk-item">
-                <span class="risk-indicator low"></span> Credit: LOW
-              </div>
-            </div>
+          <div class="pipeline-node">
+            <span class="pipeline-dot"></span>
+            <span class="pipeline-label">Strategy</span>
           </div>
 
-          <!-- SIMULATION PANEL -->
-          <div class="simulation-panel">
-            <div class="simulation-header">
-              <div class="sim-pulse"></div>
-              STRATEGIC SCENARIO SIMULATION (LIVE)
-            </div>
-
-            <div class="scenario-box">
-              <div class="scenario-title">Scenario A: Market Expansion</div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Revenue upside:</span>
-                <span class="scenario-metric-value">+$2.4B</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Risk level:</span>
-                <span class="scenario-metric-value">MEDIUM (67%)</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Success probability:</span>
-                <span class="scenario-metric-value">78%</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Capital required:</span>
-                <span class="scenario-metric-value">$890M</span>
-              </div>
-            </div>
-
-            <div class="scenario-box">
-              <div class="scenario-title">Scenario B: Defensive Consolidation</div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Revenue upside:</span>
-                <span class="scenario-metric-value">+$540M</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Risk level:</span>
-                <span class="scenario-metric-value">LOW (23%)</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Success probability:</span>
-                <span class="scenario-metric-value">94%</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Capital required:</span>
-                <span class="scenario-metric-value">$145M</span>
-              </div>
-            </div>
-
-            <div class="scenario-box">
-              <div class="scenario-title">Scenario C: Strategic Acquisition</div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Revenue upside:</span>
-                <span class="scenario-metric-value">+$3.8B</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Risk level:</span>
-                <span class="scenario-metric-value">HIGH (82%)</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Success probability:</span>
-                <span class="scenario-metric-value">62%</span>
-              </div>
-              <div class="scenario-metric">
-                <span class="scenario-metric-label">Capital required:</span>
-                <span class="scenario-metric-value">$2.1B</span>
-              </div>
-            </div>
+          <div class="pipeline-arrow" aria-hidden="true">
+            <svg viewBox="0 0 28 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="4" x2="22" y2="4" class="arrow-line"/>
+              <polygon points="22,1 28,4 22,7" class="arrow-head"/>
+            </svg>
           </div>
 
-          <!-- ACTIVITY FEED -->
-          <div class="activity-feed">
-            <div class="section-title">📊 COMMAND LOG</div>
-            <div class="activity-item">
-              <div class="activity-timestamp">14:32</div>
-              <div class="activity-text">Risk Agent completed quarterly market analysis</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-timestamp">14:18</div>
-              <div class="activity-text">Strategic Forecast updated with new competitor intelligence</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-timestamp">14:05</div>
-              <div class="activity-text">Content Agent generated 3 executive briefs</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-timestamp">13:47</div>
-              <div class="activity-text">Anomaly detection flagged unusual trading pattern</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-timestamp">13:22</div>
-              <div class="activity-text">Analytics Agent processed Q4 forecast models</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-timestamp">13:01</div>
-              <div class="activity-text">System initialized. All agents operational.</div>
-            </div>
+          <div class="pipeline-node">
+            <span class="pipeline-dot"></span>
+            <span class="pipeline-label">Content</span>
           </div>
+
+          <div class="pipeline-arrow" aria-hidden="true">
+            <svg viewBox="0 0 28 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="4" x2="22" y2="4" class="arrow-line"/>
+              <polygon points="22,1 28,4 22,7" class="arrow-head"/>
+            </svg>
+          </div>
+
+          <div class="pipeline-node">
+            <span class="pipeline-dot"></span>
+            <span class="pipeline-label">Analytics</span>
+          </div>
+
         </div>
       </div>
+      <!-- ── END PIPELINE STRIP ── -->
 
-      <!-- RIGHT PANEL -->
-      <div class="right-panel">
-        <div class="panel-section">
-          <div class="panel-section-title">ACTIVE AGENTS</div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              Research
-            </div>
-            <div class="agent-status-text">Market intelligence: 94% accuracy</div>
-          </div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              Strategy
-            </div>
-            <div class="agent-status-text">Scenario planning active</div>
-          </div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              Risk
-            </div>
-            <div class="agent-status-text">Monitoring 47 risk vectors</div>
-          </div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              Analytics
-            </div>
-            <div class="agent-status-text">Processing real-time feeds</div>
-          </div>
+      <section class="agents" id="agents">
+        <h2>Four intelligent agents. One pipeline.</h2>
+        <p class="lead">Each agent specializes in a core marketing discipline—connected end to end by Google Gemini.</p>
+        <div class="agent-grid">
+          <a class="agent-card" href="research.html">
+            <span class="agent-icon" aria-hidden="true">🔍</span>
+            <h3>Research</h3>
+            <p>Market positioning, competitor intelligence, and growth projections.</p>
+            <span class="link">Explore Research →</span>
+          </a>
+          <a class="agent-card" href="strategy.html">
+            <span class="agent-icon" aria-hidden="true">🧠</span>
+            <h3>Strategy</h3>
+            <p>Full campaign plans with channels, messaging, and timelines.</p>
+            <span class="link">Explore Strategy →</span>
+          </a>
+          <a class="agent-card" href="content.html">
+            <span class="agent-icon" aria-hidden="true">✍️</span>
+            <h3>Content</h3>
+            <p>Ad copy, email, social posts, and blog outlines on brand.</p>
+            <span class="link">Explore Content →</span>
+          </a>
+          <a class="agent-card" href="analytics.html">
+            <span class="agent-icon" aria-hidden="true">📊</span>
+            <h3>Analytics</h3>
+            <p>KPI analysis, recommendations, and performance forecasts.</p>
+            <span class="link">Explore Analytics →</span>
+          </a>
         </div>
+      </section>
+    </main>
 
-        <div class="panel-section">
-          <div class="panel-section-title">SYSTEM STATUS</div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              Data Integrity
-            </div>
-            <div class="agent-status-text">✓ 100% verified</div>
-          </div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              API Health
-            </div>
-            <div class="agent-status-text">✓ All endpoints live</div>
-          </div>
-          <div class="agent-status">
-            <div class="agent-name">
-              <div class="agent-indicator"></div>
-              Model Confidence
-            </div>
-            <div class="agent-status-text">✓ 91.3% average</div>
-          </div>
-        </div>
-
-        <div class="panel-section">
-          <div class="panel-section-title">NEXT ACTIONS</div>
-          <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-            <div style="margin-bottom: 0.75rem;">
-              <span style="color: var(--accent); font-weight: 600;">→ Review</span> market expansion scenario
-            </div>
-            <div style="margin-bottom: 0.75rem;">
-              <span style="color: var(--accent); font-weight: 600;">→ Approve</span> competitive response brief
-            </div>
-            <div>
-              <span style="color: var(--accent); font-weight: 600;">→ Initiate</span> Q2 strategic planning cycle
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function updateTime() {
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false,
-          timeZone: 'UTC'
-        }) + ' UTC';
-        document.getElementById('current-time').textContent = timeStr;
-      }
-      updateTime();
-      setInterval(updateTime, 1000);
-    </script>
+    <footer class="footer">
+      <p>Powered by Google Gemini</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="research.html">Research</a>
+        <a href="strategy.html">Strategy</a>
+        <a href="content.html">Content</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+    </footer>
   </body>
 </html>
