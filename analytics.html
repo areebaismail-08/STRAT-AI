@@ -812,7 +812,7 @@ async function runDiagnostics() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 60000);
     
-    const response = await fetch('http://localhost:3000/analytics', {
+    const response = await fetch('/api/analytics', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),

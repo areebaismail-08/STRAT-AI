@@ -740,7 +740,7 @@ async function generateContent() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 60000);
     
-    const response = await fetch('http://localhost:3000/content', {
+    const response = await fetch('/api/content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
