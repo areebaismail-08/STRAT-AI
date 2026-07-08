@@ -9,27 +9,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 3000;
-
-if (!process.env.GEMINI_API_KEY) {
-  console.error("\n❌ ERROR: GEMINI_API_KEY not found in .env file");
-  console.error("📝 Create .env file with: GEMINI_API_KEY=your_key_here\n");
-  process.exit(1);
-}
-
-console.log("\n✅ API Key found");
-console.log("🚀 Starting StratAI Server...\n");
-
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const MODEL_NAME = "gemini-2.5-flash";
 
 // ==================== HELPER FUNCTIONS ====================
 function cleanJsonResponse(text) {
   const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (jsonMatch) {
-    return jsonMatch[0];
-  }
-  return text;
+  return jsonMatch ? jsonMatch[0] : text;
 }
 
 function extractJSON(text) {
@@ -43,9 +29,8 @@ function extractJSON(text) {
 }
 
 // ==================== RESEARCH AGENT ====================
-app.post("/research", async (req, res) => {
+app.post("/api/research", async (req, res) => {
   console.log("\n🔬 RESEARCH AGENT Request");
-  console.log("📝 Input:", req.body.brandName || req.body.industry || "Brand analysis");
   
   try {
     const userData = req.body;
@@ -64,7 +49,6 @@ IMPORTANT RULES:
 - NO generic motivational advice or startup clichés
 - NO fake certainty about things you can't know
 - Be brutally realistic when needed
-- Infer positioning realistically from available info
 - Do NOT pretend to have hidden analytics or engagement data
 
 Return ONLY valid JSON with EXACTLY these 8 fields:
@@ -83,8 +67,6 @@ Return ONLY valid JSON with EXACTLY these 8 fields:
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
     const result = await model.generateContent(prompt);
     const text = result.response.text();
-    
-    console.log("✅ Research analysis complete");
     
     let researchData = extractJSON(text);
     
@@ -119,9 +101,8 @@ Return ONLY valid JSON with EXACTLY these 8 fields:
 });
 
 // ==================== STRATEGY AGENT ====================
-app.post("/strategy", async (req, res) => {
+app.post("/api/strategy", async (req, res) => {
   console.log("\n📊 STRATEGY AGENT Request");
-  console.log("📝 Brand:", req.body.brandName || "Unnamed business");
   
   try {
     const userData = req.body;
@@ -148,7 +129,6 @@ IMPORTANT RULES:
 - NO unrealistic promises or fantasy scaling claims
 - Be psychologically realistic and market-aware
 - Match ALL recommendations to their brand vibe
-- Avoid discount-heavy strategies if it damages premium perception
 
 Return ONLY valid JSON with EXACTLY these 9 fields:
 
@@ -167,8 +147,6 @@ Return ONLY valid JSON with EXACTLY these 9 fields:
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
     const result = await model.generateContent(prompt);
     const text = result.response.text();
-    
-    console.log("✅ Strategy analysis complete");
     
     let strategyData = extractJSON(text);
     
@@ -205,9 +183,8 @@ Return ONLY valid JSON with EXACTLY these 9 fields:
 });
 
 // ==================== CONTENT AGENT ====================
-app.post("/content", async (req, res) => {
+app.post("/api/content", async (req, res) => {
   console.log("\n🎨 CONTENT AGENT Request");
-  console.log("📝 Type:", req.body.contentType || "Content generation");
   
   try {
     const userData = req.body;
@@ -228,9 +205,7 @@ Content Type: ${userData.contentType || "Not specified"}
 
 IMPORTANT RULES:
 - NO generic AI marketing fluff or startup clichés
-- NO "elevate your brand" or random trendy slang unless brand fits it
 - Maintain brand vibe consistency throughout
-- Do NOT suggest loud aggressive copy for elegant/cozy/luxury brands
 - Content must feel strategically intentional
 
 Return ONLY valid JSON with EXACTLY these 5 fields:
@@ -247,17 +222,15 @@ Return ONLY valid JSON with EXACTLY these 5 fields:
     const result = await model.generateContent(prompt);
     const text = result.response.text();
     
-    console.log("✅ Content generation complete");
-    
     let contentData = extractJSON(text);
     
     if (!contentData) {
       contentData = {
-        psychologyReasoning: "This angle resonates with audience psychology by addressing their core emotional needs while maintaining brand authenticity.",
-        mainContent: `Experience the difference with ${userData.brandName || "your brand"}. Designed for ${userData.audience || "your audience"}. Built to solve your challenges. ${userData.ctaGoal || 'Get started'} today.`,
-        hookStrategy: "The hook interrupts scrolling by creating a curiosity gap that your target audience's emotional state can't ignore.",
-        ctaReasoning: "This CTA matches brand positioning - inviting action without pressure while maintaining premium perception.",
-        visualDirection: "Lighting should match brand mood. Framing should feel authentic to platform. Overall atmosphere should align with emotional trigger."
+        psychologyReasoning: "This angle resonates with audience psychology by addressing their core emotional needs.",
+        mainContent: `Experience the difference with ${userData.brandName || "your brand"}. ${userData.ctaGoal || 'Get started'} today.`,
+        hookStrategy: "The hook interrupts scrolling by creating a curiosity gap.",
+        ctaReasoning: "This CTA matches brand positioning - inviting action without pressure.",
+        visualDirection: "Lighting and framing should match brand mood and platform."
       };
     }
     
@@ -267,7 +240,7 @@ Return ONLY valid JSON with EXACTLY these 5 fields:
     console.error("❌ Content error:", error.message);
     res.json({
       psychologyReasoning: "⚠️ Content generation temporarily unavailable",
-      mainContent: "Please try again in a moment. Check server connection.",
+      mainContent: "Please try again in a moment.",
       hookStrategy: "Service will resume shortly",
       ctaReasoning: "API verification may be needed",
       visualDirection: "Retry in a few moments"
@@ -276,9 +249,8 @@ Return ONLY valid JSON with EXACTLY these 5 fields:
 });
 
 // ==================== ANALYTICS AGENT ====================
-app.post("/analytics", async (req, res) => {
+app.post("/api/analytics", async (req, res) => {
   console.log("\n📈 ANALYTICS AGENT Request");
-  console.log("📝 Brand:", req.body.brandName || "Business analysis");
   
   try {
     const userData = req.body;
@@ -330,8 +302,6 @@ Return ONLY valid JSON with EXACTLY these fields:
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
     const result = await model.generateContent(prompt);
     const text = result.response.text();
-    
-    console.log("✅ Analytics analysis complete");
     
     let analyticsData = extractJSON(text);
     
@@ -388,19 +358,9 @@ Return ONLY valid JSON with EXACTLY these fields:
 });
 
 // ==================== HEALTH CHECK ====================
-app.get("/health", (req, res) => {
-  res.json({ status: "OK", message: "StratAI Server is running" });
+app.get("/api/health", (req, res) => {
+  res.json({ status: "OK", message: "StratAI Server is running on Vercel" });
 });
 
-// ==================== START SERVER ====================
-app.listen(PORT, () => {
-  console.log(`✨ StratAI Server Running on http://localhost:${PORT}`);
-  console.log(`🤖 Using model: ${MODEL_NAME}`);
-  console.log(`\n📡 Available Endpoints:`);
-  console.log(`   POST /research   - Market Intelligence`);
-  console.log(`   POST /strategy   - Business Strategy`);
-  console.log(`   POST /content    - Creative Content`);
-  console.log(`   POST /analytics  - Business Diagnostics`);
-  console.log(`   GET  /health     - Server Health Check`);
-  console.log(`\n✅ Ready to accept requests!\n`);
-});
+// ==================== EXPORT FOR VERCEL ====================
+module.exports = app;
